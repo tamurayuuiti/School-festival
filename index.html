@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カウンターと円グラフ</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .counters-section, .charts-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+        #counters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-gap: 20px;
+            padding: 20px;
+            width: 100%;
+        }
+        .counter-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .counter-container:hover {
+            transform: translateY(-5px);
+        }
+        .count {
+            font-size: 1.5em;
+            color: #333;
+            margin: 10px 0;
+        }
+        .amount {
+            font-size: 1em;
+            color: #666;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        button {
+            padding: 8px 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50%;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        .icon-plus::before {
+            content: "+";
+        }
+        .icon-minus::before {
+            content: "-";
+        }
+        canvas {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+        }
+        .totals-container {
+            margin-top: 20px;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+        .total-title {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .total-value {
+            font-size: 1.1em;
+            color: #333;
+        }
+        .day-select {
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .day-select label {
+            margin-right: 10px;
+            font-size: 1em;
+        }
+        @media (max-width: 768px) {
+            .count {
+                font-size: 1.3em;
+            }
+            .amount {
+                font-size: 0.9em;
+            }
+            .total-title {
+                font-size: 1.2em;
+            }
+            .total-value {
+                font-size: 1em;
+            }
+        }
+    </style>
+    <!-- Include Chart.js and the data labels plugin from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+</head>
+<body>
+    <div class="day-select">
+        <label>
+            <input type="radio" name="day" value="1" checked onchange="confirmDayChange(this.value)"> 1日目
+        </label>
+        <label>
+            <input type="radio" name="day" value="2" onchange="confirmDayChange(this.value)"> 2日目
+        </label>
+    </div>
+    <div class="counters-section">
+        <div id="counters">
+            <div class="counter-container" id="plain-counter" style="border-top: 5px solid #007BFF;">
+                <h2>プレーン</h2>
+                <div class="count" id="plain-count">0/30</div>
+                <div class="amount" id="plain-amount">0 円</div>
+                <div class="button-group">
+                    <button onclick="changeCount('plain', 1)" class="icon-plus"></button>
+                    <button onclick="changeCount('plain', -1)" class="icon-minus"></button>
+                </div>
+                <div class="limit-select">
+                    上限: <span id="plain-limit">30</span>
+                </div>
+            </div>
+            <div class="counter-container" id="chocolate-counter" style="border-top: 5px solid #8B4513;">
+                <h2>チョコレート</h2>
+                <div class="count" id="chocolate-count">0/100</div>
+                <div class="amount" id="chocolate-amount">0 円</div>
+                <div class="button-group">
+                    <button onclick="changeCount('chocolate', 1)" class="icon-plus"></button>
+                    <button onclick="changeCount('chocolate', -1)" class="icon-minus"></button>
+                </div>
+                <div class="limit-select">
+                    上限: <span id="chocolate-limit">100</span>
+                </div>
+            </div>
+            <div class="counter-container" id="strawberry-counter" style="border-top: 5px solid #FF6347;">
+                <h2>いちご</h2>
+                <div class="count" id="strawberry-count">0/100</div>
+                <div class="amount" id="strawberry-amount">0 円</div>
+                <div class="button-group">
+                    <button onclick="changeCount('strawberry', 1)" class="icon-plus"></button>
+                    <button onclick="changeCount('strawberry', -1)" class="icon-minus"></button>
+                </div>
+                <div class="limit-select">
+                    上限: <span id="strawberry-limit">100</span>
+                </div>
+            </div>
+            <div class="counter-container" id="matcha-counter" style="border-top: 5px solid #3CB371;">
+                <h2>抹茶</h2>
+                <div class="count" id="matcha-count">0/50</div>
+                <div class="amount" id="matcha-amount">0 円</div>
+                <div class="button-group">
+                    <button onclick="changeCount('matcha', 1)" class="icon-plus"></button>
+                    <button onclick="changeCount('matcha', -1)" class="icon-minus"></button>
+                </div>
+                <div class="limit-select">
+                    上限: <span id="matcha-limit">50</span>
+                </div>
+            </div>
+            <div class="counter-container" id="jdk-counter" style="border-top: 5px solid #FFD700;">
+                <h2>JDK</h2>
+                <div class="count" id="jdk-count">0/20</div>
+                <div class="amount" id="jdk-amount">0 円</div>
+                <div class="button-group">
+                    <button onclick="changeCount('jdk', 1)" class="icon-plus"></button>
+                    <button onclick="changeCount('jdk', -1)" class="icon-minus"></button>
+                </div>
+                <div class="limit-select">
+                    上限: <span id="jdk-limit">20</span>
+                </div>
+            </div>
+        </div>
+        <div class="totals-container">
+            <div class="total-title">合計</div>
+            <div class="total-value" id="total-count">総数量: 0 個</div>
+            <div class="total-value" id="total-amount">総金額: 0 円</div>
+        </div>
+    </div>
+    <div class="charts-section">
+        <canvas id="count-pie-chart"></canvas>
+        <canvas id="value-pie-chart"></canvas>
+    </div>
+    <script>
+        // Initialize counts and limits for each type
+        const counts = {
+            plain: 0,
+            chocolate: 0,
+            strawberry: 0,
+            matcha: 0,
+            jdk: 0
+        };
+
+        const limits = {
+            plain: 30,
+            chocolate: 100,
+            strawberry: 100,
+            matcha: 50,
+            jdk: 20
+        };
+
+        // Monetary values for each type
+        const values = {
+            plain: 100,
+            chocolate: 100,
+            strawberry: 100,
+            matcha: 100,
+            jdk: 200
+        };
+
+        // Initialize Chart.js pie chart instances
+        const countPieChart = createPieChart('count-pie-chart', '数量の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '個');
+        const valuePieChart = createPieChart('value-pie-chart', '金額の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '円');
+
+        function changeCount(type, delta) {
+            // Ensure that the count does not go below zero or exceed the limit
+            if (counts[type] + delta >= 0 && counts[type] + delta <= limits[type]) {
+                counts[type] += delta;
+            }
+            document.getElementById(`${type}-count`).innerText = `${counts[type]}/${limits[type]}`;
+
+            // Calculate the amount for each type and update the display
+            const amount = counts[type] * values[type];
+            document.getElementById(`${type}-amount`).innerText = `${amount} 円`;
+
+            // Update totals
+            updateTotals();
+
+            // Update the pie charts with new data
+            updatePieCharts();
+        }
+
+        function setLimits(day) {
+            if (day === "1") {
+                limits.plain = 30;
+                limits.chocolate = 100;
+                limits.strawberry = 100;
+                limits.matcha = 50;
+                limits.jdk = 20;
+            } else if (day === "2") {
+                limits.plain = 30;
+                limits.chocolate = 150;
+                limits.strawberry = 150;
+                limits.matcha = 40;
+                limits.jdk = 30;
+            }
+
+            // Update limits display
+            document.getElementById('plain-limit').innerText = limits.plain;
+            document.getElementById('chocolate-limit').innerText = limits.chocolate;
+            document.getElementById('strawberry-limit').innerText = limits.strawberry;
+            document.getElementById('matcha-limit').innerText = limits.matcha;
+            document.getElementById('jdk-limit').innerText = limits.jdk;
+
+            // Reset counts and update displays
+            for (let type in counts) {
+                counts[type] = 0;
+                document.getElementById(`${type}-count`).innerText = `0/${limits[type]}`;
+                document.getElementById(`${type}-amount`).innerText = `0 円`;
+            }
+            updateTotals();
+            updatePieCharts();
+        }
+
+        function updateTotals() {
+            const totalCount = Object.values(counts).reduce((sum, count) => sum + count, 0);
+            const totalAmount = Object.entries(counts).reduce((sum, [key, count]) => sum + (count * values[key]), 0);
+
+            document.getElementById('total-count').innerText = `総数量: ${totalCount} 個`;
+            document.getElementById('total-amount').innerText = `総金額: ${totalAmount} 円`;
+        }
+
+        function createPieChart(canvasId, title, backgroundColors, unit) {
+            return new Chart(document.getElementById(canvasId).getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: ['プレーン', 'チョコレート', 'いちご', '抹茶', 'JDK'],
+                    datasets: [{
+                        data: [0, 0, 0, 0, 0],
+                        backgroundColor: backgroundColors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: title
+                        },
+                        datalabels: {
+                            color: '#fff',
+                            formatter: (value, context) => {
+                                if (value > 0) {
+                                    return `${context.chart.data.labels[context.dataIndex]}: ${value}${unit}`;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        function updatePieCharts() {
+            // Calculate count-based data
+            const countData = Object.values(counts);
+
+            // Calculate value-based data
+            const valueData = Object.entries(counts).map(([key, count]) => count * values[key]);
+
+            // Update count pie chart
+            countPieChart.data.datasets[0].data = countData;
+            countPieChart.update();
+
+            // Update value pie chart
+            valuePieChart.data.datasets[0].data = valueData;
+            valuePieChart.update();
+        }
+
+        function confirmDayChange(selectedDay) {
+            const confirmation = confirm('日を変更するとカウンターがリセットされます。よろしいですか？');
+            if (confirmation) {
+                setLimits(selectedDay);
+            } else {
+                // Reset the radio buttons to the current day
+                document.querySelector(`input[name="day"][value="${selectedDay === '1' ? '2' : '1'}"]`).checked = true;
+            }
+        }
+
+        // Set initial limits for Day One on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setLimits("1");
+        });
+    </script>
+</body>
+</html>
