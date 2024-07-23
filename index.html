@@ -24,44 +24,6 @@
             color: #ddd;
         }
 
-        .day-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .day-toggle button {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: 2px solid #007BFF;
-            border-radius: 8px;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .day-toggle button.active {
-            background-color: white;
-            color: #007BFF;
-        }
-
-        .day-toggle button:hover {
-            background-color: #0056b3;
-            color: white;
-        }
-
-        .current-day {
-            font-size: 1.4em;
-            margin-bottom: 10px;
-            text-align: center;
-            font-weight: bold;
-        }
-
         .counters-section, .charts-section {
             display: flex;
             flex-direction: column;
@@ -128,8 +90,7 @@
         }
         canvas {
             width: 100%;
-            max-width: 400px;
-            height: 250px;
+            height: auto;
             transition: background-color 0.3s;
         }
         .totals-container {
@@ -149,6 +110,21 @@
         }
         .total-value {
             font-size: 1.1em;
+        }
+        .day-select {
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .day-select label {
+            margin-right: 10px;
+            font-size: 1em;
+        }
+        .current-day {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
         }
         @media (max-width: 768px) {
             .count {
@@ -170,11 +146,15 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body>
-    <div class="current-day" id="current-day">現在の設定: 1日目</div>
-    <div class="day-toggle">
-        <button id="toggle-day-1" class="active" onclick="toggleDay('1')">1日目</button>
-        <button id="toggle-day-2" onclick="toggleDay('2')">2日目</button>
+    <div class="day-select">
+        <label>
+            <input type="radio" name="day" value="1" onchange="confirmDayChange(this.value)"> 1日目
+        </label>
+        <label>
+            <input type="radio" name="day" value="2" onchange="confirmDayChange(this.value)"> 2日目
+        </label>
     </div>
+    <div class="current-day" id="current-day">現在の設定: 1日目</div>
     <div class="counters-section">
         <div id="counters">
             <div class="counter-container" id="plain-counter" style="border-top: 5px solid #007BFF;">
@@ -244,7 +224,7 @@
             <div class="total-value" id="total-amount">総金額: 0 円</div>
         </div>
     </div>
-    <div class="charts-section" style="flex-direction: row; justify-content: space-around; align-items: center;">
+    <div class="charts-section" style="flex-direction: row; justify-content: space-between; align-items: center;">
         <canvas id="count-pie-chart"></canvas>
         <canvas id="value-pie-chart"></canvas>
     </div>
@@ -393,16 +373,17 @@
             valuePieChart.update();
         }
 
-        function toggleDay(selectedDay) {
-            currentDay = selectedDay;
-            localStorage.setItem('currentDay', currentDay);
-            document.getElementById('current-day').innerText = `現在の設定: ${currentDay}日目`;
-
-            // Update button styles
-            document.getElementById('toggle-day-1').classList.toggle('active', currentDay === "1");
-            document.getElementById('toggle-day-2').classList.toggle('active', currentDay === "2");
-
-            updateCountersAndCharts();
+        function confirmDayChange(selectedDay) {
+            const confirmation = confirm('日を変更するとカウンターがリセットされます。よろしいですか？');
+            if (confirmation) {
+                currentDay = selectedDay;
+                localStorage.setItem('currentDay', currentDay);
+                document.getElementById('current-day').innerText = `現在の設定: ${currentDay}日目`;
+                updateCountersAndCharts();
+            } else {
+                // Reset the radio buttons to the current day
+                document.querySelector(`input[name="day"][value="${currentDay}"]`).checked = true;
+            }
         }
 
         function toggleDarkMode(isDark) {
@@ -433,8 +414,9 @@
 
         // Set initial limits and counters for the saved day on page load
         document.addEventListener('DOMContentLoaded', () => {
-            // Set the active button based on the saved day
-            toggleDay(currentDay);
+            // Set the checked radio button based on the saved day
+            document.querySelector(`input[name="day"][value="${currentDay}"]`).checked = true;
+            document.getElementById('current-day').innerText = `現在の設定: ${currentDay}日目`;
 
             // Create pie charts
             countPieChart = createPieChart('count-pie-chart', '数量の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '個');
@@ -442,6 +424,11 @@
 
             // Initialize counters and charts
             updateCountersAndCharts();
+
+            window.addEventListener('beforeunload', (event) => {
+                event.preventDefault();
+                event.returnValue = '';
+            });
         });
     </script>
 </body>
