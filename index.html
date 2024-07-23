@@ -34,7 +34,7 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             grid-gap: 20px;
             padding: 20px;
             width: 100%;
@@ -70,10 +70,10 @@
         }
 
         button {
-            padding: 18px 26px;
-            font-size: 24px;
+            padding: 10px 20px;
+            font-size: 16px;
             border: none;
-            border-radius: 50%;
+            border-radius: 8px;
             background-color: #007BFF;
             color: white;
             cursor: pointer;
@@ -133,10 +133,11 @@
         }
 
         .current-day {
-            font-size: 1.2em;
+            font-size: 1.5em;
             margin-bottom: 20px;
             text-align: center;
             font-weight: bold;
+            color: #007BFF;
         }
 
         .charts-section {
@@ -158,23 +159,57 @@
             justify-content: center;
         }
 
+        .reset-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #DC3545;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            display: none; /* Initially hidden */
+        }
+
+        .reset-button.show {
+            display: inline-block; /* Show when active */
+        }
+
+        .reset-button:hover {
+            background-color: #C82333;
+        }
+
+        .reset-button:active {
+            transform: scale(0.95);
+        }
+
         @media (max-width: 768px) {
+            #counters {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+
             .count {
                 font-size: 1.3em;
             }
+
             .amount {
                 font-size: 0.9em;
             }
+
             .total-title {
                 font-size: 1.2em;
             }
+
             .total-value {
                 font-size: 1em;
             }
+
             .charts-section {
                 flex-direction: column;
                 align-items: stretch;
             }
+
             .chart-container {
                 max-width: 100%;
                 margin-bottom: 20px;
@@ -258,6 +293,7 @@
                 </div>
             </div>
         </div>
+        <button id="reset-button" class="reset-button" onclick="resetCounters(currentDay)">リセット</button>
         <div class="totals-container">
             <div class="total-title">合計</div>
             <div class="total-value" id="total-count">総数量: 0 個</div>
@@ -422,6 +458,23 @@
             localStorage.setItem('currentDay', currentDay);
             document.getElementById('current-day').innerText = `現在の設定: ${currentDay}日目`;
             updateCountersAndCharts();
+            // Show the correct reset button
+            const resetButton = document.getElementById('reset-button');
+            resetButton.classList.add('show');
+        }
+
+        function resetCounters(day) {
+            const confirmation = confirm(`${day}日目のカウンターをリセットしてもよろしいですか？`);
+            if (confirmation) {
+                if (day === "1") {
+                    Object.keys(countsDay1).forEach(key => countsDay1[key] = 0);
+                    localStorage.setItem('countsDay1', JSON.stringify(countsDay1));
+                } else {
+                    Object.keys(countsDay2).forEach(key => countsDay2[key] = 0);
+                    localStorage.setItem('countsDay2', JSON.stringify(countsDay2));
+                }
+                updateCountersAndCharts();
+            }
         }
 
         function toggleDarkMode(isDark) {
@@ -462,6 +515,9 @@
 
             // Initialize counters and charts
             updateCountersAndCharts();
+
+            // Show the correct reset button on initial load
+            document.getElementById('reset-button').classList.add('show');
         });
     </script>
 </body>
