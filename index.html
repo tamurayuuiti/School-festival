@@ -25,7 +25,7 @@
         }
         #counters {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             grid-gap: 20px;
             padding: 20px;
             width: 100%;
@@ -54,10 +54,11 @@
             display: flex;
             justify-content: center;
             gap: 10px;
+            margin: 10px 0;
         }
         button {
-            padding: 8px 12px;
-            font-size: 16px;
+            padding: 16px 24px;
+            font-size: 24px;
             border: none;
             border-radius: 50%;
             background-color: #007BFF;
@@ -82,8 +83,8 @@
         }
         canvas {
             width: 100%;
-            max-width: 300px;
-            height: 200px;
+            max-width: 350px;
+            height: 250px;
         }
         .totals-container {
             margin-top: 20px;
@@ -154,16 +155,16 @@
                     上限: <span id="plain-limit">30</span>
                 </div>
             </div>
-            <div class="counter-container" id="chocolate-counter" style="border-top: 5px solid #8B4513;">
-                <h2>チョコレート</h2>
-                <div class="count" id="chocolate-count">0/100</div>
-                <div class="amount" id="chocolate-amount">0 円</div>
+            <div class="counter-container" id="choco-counter" style="border-top: 5px solid #8B4513;">
+                <h2>チョコ</h2>
+                <div class="count" id="choco-count">0/100</div>
+                <div class="amount" id="choco-amount">0 円</div>
                 <div class="button-group">
-                    <button onclick="changeCount('chocolate', 1)" class="icon-plus"></button>
-                    <button onclick="changeCount('chocolate', -1)" class="icon-minus"></button>
+                    <button onclick="changeCount('choco', 1)" class="icon-plus"></button>
+                    <button onclick="changeCount('choco', -1)" class="icon-minus"></button>
                 </div>
                 <div class="limit-select">
-                    上限: <span id="chocolate-limit">100</span>
+                    上限: <span id="choco-limit">100</span>
                 </div>
             </div>
             <div class="counter-container" id="strawberry-counter" style="border-top: 5px solid #FF6347;">
@@ -209,7 +210,7 @@
             <div class="total-value" id="total-amount">総金額: 0 円</div>
         </div>
     </div>
-    <div class="charts-section">
+    <div class="charts-section" style="flex-direction: row; justify-content: space-between; align-items: center;">
         <canvas id="count-pie-chart"></canvas>
         <canvas id="value-pie-chart"></canvas>
     </div>
@@ -217,7 +218,7 @@
         // Initialize counts and limits for each type
         const counts = {
             plain: 0,
-            chocolate: 0,
+            choco: 0,
             strawberry: 0,
             matcha: 0,
             jdk: 0
@@ -225,7 +226,7 @@
 
         const limits = {
             plain: 30,
-            chocolate: 100,
+            choco: 100,
             strawberry: 100,
             matcha: 50,
             jdk: 20
@@ -234,7 +235,7 @@
         // Monetary values for each type
         const values = {
             plain: 100,
-            chocolate: 100,
+            choco: 100,
             strawberry: 100,
             matcha: 100,
             jdk: 200
@@ -265,13 +266,13 @@
         function setLimits(day) {
             if (day === "1") {
                 limits.plain = 30;
-                limits.chocolate = 100;
+                limits.choco = 100;
                 limits.strawberry = 100;
                 limits.matcha = 50;
                 limits.jdk = 20;
             } else if (day === "2") {
                 limits.plain = 30;
-                limits.chocolate = 150;
+                limits.choco = 150;
                 limits.strawberry = 150;
                 limits.matcha = 40;
                 limits.jdk = 30;
@@ -279,7 +280,7 @@
 
             // Update limits display
             document.getElementById('plain-limit').innerText = limits.plain;
-            document.getElementById('chocolate-limit').innerText = limits.chocolate;
+            document.getElementById('choco-limit').innerText = limits.choco;
             document.getElementById('strawberry-limit').innerText = limits.strawberry;
             document.getElementById('matcha-limit').innerText = limits.matcha;
             document.getElementById('jdk-limit').innerText = limits.jdk;
@@ -306,7 +307,7 @@
             return new Chart(document.getElementById(canvasId).getContext('2d'), {
                 type: 'pie',
                 data: {
-                    labels: ['プレーン', 'チョコレート', 'いちご', '抹茶', 'JDK'],
+                    labels: ['プレーン', 'チョコ', 'いちご', '抹茶', 'JDK'],
                     datasets: [{
                         data: [0, 0, 0, 0, 0],
                         backgroundColor: backgroundColors
@@ -367,6 +368,10 @@
         // Set initial limits for Day One on page load
         document.addEventListener('DOMContentLoaded', () => {
             setLimits("1");
+            window.addEventListener('beforeunload', (event) => {
+                event.preventDefault();
+                event.returnValue = '';
+            });
         });
     </script>
 </body>
