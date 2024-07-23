@@ -24,6 +24,44 @@
             color: #ddd;
         }
 
+        .day-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .day-toggle button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid #007BFF;
+            border-radius: 8px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .day-toggle button.active {
+            background-color: white;
+            color: #007BFF;
+        }
+
+        .day-toggle button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .current-day {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
         .counters-section, .charts-section {
             display: flex;
             flex-direction: column;
@@ -90,7 +128,7 @@
         }
         canvas {
             width: 100%;
-            max-width: 350px;
+            max-width: 400px;
             height: 250px;
             transition: background-color 0.3s;
         }
@@ -112,15 +150,6 @@
         .total-value {
             font-size: 1.1em;
         }
-        .day-select {
-            margin-bottom: 20px;
-            text-align: center;
-            width: 100%;
-        }
-        .day-select label {
-            margin-right: 10px;
-            font-size: 1em;
-        }
         @media (max-width: 768px) {
             .count {
                 font-size: 1.3em;
@@ -141,13 +170,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body>
-    <div class="day-select">
-        <label>
-            <input type="radio" name="day" value="1" checked onchange="confirmDayChange(this.value)"> 1日目
-        </label>
-        <label>
-            <input type="radio" name="day" value="2" onchange="confirmDayChange(this.value)"> 2日目
-        </label>
+    <div class="current-day" id="current-day">現在の設定: 1日目</div>
+    <div class="day-toggle">
+        <button id="toggle-day-1" class="active" onclick="toggleDay('1')">1日目</button>
+        <button id="toggle-day-2" onclick="toggleDay('2')">2日目</button>
     </div>
     <div class="counters-section">
         <div id="counters">
@@ -218,13 +244,21 @@
             <div class="total-value" id="total-amount">総金額: 0 円</div>
         </div>
     </div>
-    <div class="charts-section" style="flex-direction: row; justify-content: space-between; align-items: center;">
+    <div class="charts-section" style="flex-direction: row; justify-content: space-around; align-items: center;">
         <canvas id="count-pie-chart"></canvas>
         <canvas id="value-pie-chart"></canvas>
     </div>
     <script>
-        // Initialize counts and limits for each type
-        const counts = {
+        // Initialize counts and limits for each type for both days
+        const countsDay1 = JSON.parse(localStorage.getItem('countsDay1')) || {
+            plain: 0,
+            choco: 0,
+            strawberry: 0,
+            matcha: 0,
+            jdk: 0
+        };
+
+        const countsDay2 = JSON.parse(localStorage.getItem('countsDay2')) || {
             plain: 0,
             choco: 0,
             strawberry: 0,
@@ -249,11 +283,28 @@
             jdk: 200
         };
 
+        // Track the current day setting
+        let currentDay = localStorage.getItem('currentDay') || "1";
+
         // Initialize Chart.js pie chart instances
-        const countPieChart = createPieChart('count-pie-chart', '数量の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '個');
-        const valuePieChart = createPieChart('value-pie-chart', '金額の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '円');
+        let countPieChart;
+        let valuePieChart;
+
+        // Function to update the counters and charts based on the selected day
+        function updateCountersAndCharts() {
+            const counts = currentDay === "1" ? countsDay1 : countsDay2;
+
+            for (let type in counts) {
+                document.getElementById(`${type}-count`).innerText = `${counts[type]}/${limits[type]}`;
+                document.getElementById(`${type}-amount`).innerText = `${counts[type] * values[type]} 円`;
+            }
+            updateTotals();
+            updatePieCharts();
+        }
 
         function changeCount(type, delta) {
+            const counts = currentDay === "1" ? countsDay1 : countsDay2;
+
             // Ensure that the count does not go below zero or exceed the limit
             if (counts[type] + delta >= 0 && counts[type] + delta <= limits[type]) {
                 counts[type] += delta;
@@ -269,41 +320,17 @@
 
             // Update the pie charts with new data
             updatePieCharts();
-        }
 
-        function setLimits(day) {
-            if (day === "1") {
-                limits.plain = 30;
-                limits.choco = 100;
-                limits.strawberry = 100;
-                limits.matcha = 50;
-                limits.jdk = 20;
-            } else if (day === "2") {
-                limits.plain = 30;
-                limits.choco = 150;
-                limits.strawberry = 150;
-                limits.matcha = 40;
-                limits.jdk = 30;
+            // Save the counts in localStorage
+            if (currentDay === "1") {
+                localStorage.setItem('countsDay1', JSON.stringify(countsDay1));
+            } else {
+                localStorage.setItem('countsDay2', JSON.stringify(countsDay2));
             }
-
-            // Update limits display
-            document.getElementById('plain-limit').innerText = limits.plain;
-            document.getElementById('choco-limit').innerText = limits.choco;
-            document.getElementById('strawberry-limit').innerText = limits.strawberry;
-            document.getElementById('matcha-limit').innerText = limits.matcha;
-            document.getElementById('jdk-limit').innerText = limits.jdk;
-
-            // Reset counts and update displays
-            for (let type in counts) {
-                counts[type] = 0;
-                document.getElementById(`${type}-count`).innerText = `0/${limits[type]}`;
-                document.getElementById(`${type}-amount`).innerText = `0 円`;
-            }
-            updateTotals();
-            updatePieCharts();
         }
 
         function updateTotals() {
+            const counts = currentDay === "1" ? countsDay1 : countsDay2;
             const totalCount = Object.values(counts).reduce((sum, count) => sum + count, 0);
             const totalAmount = Object.entries(counts).reduce((sum, [key, count]) => sum + (count * values[key]), 0);
 
@@ -323,6 +350,7 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
                             position: 'top'
@@ -348,6 +376,8 @@
         }
 
         function updatePieCharts() {
+            const counts = currentDay === "1" ? countsDay1 : countsDay2;
+
             // Calculate count-based data
             const countData = Object.values(counts);
 
@@ -363,14 +393,16 @@
             valuePieChart.update();
         }
 
-        function confirmDayChange(selectedDay) {
-            const confirmation = confirm('日を変更するとカウンターがリセットされます。よろしいですか？');
-            if (confirmation) {
-                setLimits(selectedDay);
-            } else {
-                // Reset the radio buttons to the current day
-                document.querySelector(`input[name="day"][value="${selectedDay === '1' ? '2' : '1'}"]`).checked = true;
-            }
+        function toggleDay(selectedDay) {
+            currentDay = selectedDay;
+            localStorage.setItem('currentDay', currentDay);
+            document.getElementById('current-day').innerText = `現在の設定: ${currentDay}日目`;
+
+            // Update button styles
+            document.getElementById('toggle-day-1').classList.toggle('active', currentDay === "1");
+            document.getElementById('toggle-day-2').classList.toggle('active', currentDay === "2");
+
+            updateCountersAndCharts();
         }
 
         function toggleDarkMode(isDark) {
@@ -399,13 +431,17 @@
             toggleDarkMode(e.matches);
         });
 
-        // Set initial limits for Day One on page load
+        // Set initial limits and counters for the saved day on page load
         document.addEventListener('DOMContentLoaded', () => {
-            setLimits("1");
-            window.addEventListener('beforeunload', (event) => {
-                event.preventDefault();
-                event.returnValue = '';
-            });
+            // Set the active button based on the saved day
+            toggleDay(currentDay);
+
+            // Create pie charts
+            countPieChart = createPieChart('count-pie-chart', '数量の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '個');
+            valuePieChart = createPieChart('value-pie-chart', '金額の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '円');
+
+            // Initialize counters and charts
+            updateCountersAndCharts();
         });
     </script>
 </body>
