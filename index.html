@@ -24,13 +24,14 @@
             color: #ddd;
         }
 
-        .counters-section, .charts-section {
+        .counters-section {
             display: flex;
             flex-direction: column;
             gap: 20px;
             width: 100%;
             max-width: 900px;
         }
+
         #counters {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -38,6 +39,7 @@
             padding: 20px;
             width: 100%;
         }
+
         .counter-container {
             background: white;
             border-radius: 10px;
@@ -46,22 +48,27 @@
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
         }
+
         .counter-container:hover {
             transform: translateY(-5px);
         }
+
         .count {
             font-size: 1.5em;
             margin: 10px 0;
         }
+
         .amount {
             font-size: 1em;
         }
+
         .button-group {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin: 10px 0;
         }
+
         button {
             padding: 18px 26px;
             font-size: 24px;
@@ -76,23 +83,23 @@
             justify-content: center;
             touch-action: manipulation; /* Better support for touch devices */
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         button:active {
             transform: scale(0.95);
         }
+
         .icon-plus::before {
             content: "+";
         }
+
         .icon-minus::before {
             content: "-";
         }
-        canvas {
-            width: 100%;
-            height: auto;
-            transition: background-color 0.3s;
-        }
+
         .totals-container {
             margin-top: 20px;
             background-color: #ffffff;
@@ -104,28 +111,53 @@
             max-width: 900px;
             transition: background-color 0.3s, color 0.3s;
         }
+
         .total-title {
             font-size: 1.3em;
             margin-bottom: 10px;
         }
+
         .total-value {
             font-size: 1.1em;
         }
+
         .day-select {
             margin-bottom: 20px;
             text-align: center;
             width: 100%;
         }
+
         .day-select label {
             margin-right: 10px;
             font-size: 1em;
         }
+
         .current-day {
             font-size: 1.2em;
             margin-bottom: 20px;
             text-align: center;
             font-weight: bold;
         }
+
+        .charts-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .chart-container {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 10px;
+            display: flex;
+            justify-content: center;
+        }
+
         @media (max-width: 768px) {
             .count {
                 font-size: 1.3em;
@@ -138,6 +170,14 @@
             }
             .total-value {
                 font-size: 1em;
+            }
+            .charts-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .chart-container {
+                max-width: 100%;
+                margin-bottom: 20px;
             }
         }
     </style>
@@ -224,9 +264,13 @@
             <div class="total-value" id="total-amount">総金額: 0 円</div>
         </div>
     </div>
-    <div class="charts-section" style="flex-direction: row; justify-content: space-between; align-items: center;">
-        <canvas id="count-pie-chart"></canvas>
-        <canvas id="value-pie-chart"></canvas>
+    <div class="charts-section">
+        <div class="chart-container">
+            <canvas id="count-pie-chart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="value-pie-chart"></canvas>
+        </div>
     </div>
     <script>
         // Initialize counts and limits for each type for both days
@@ -330,7 +374,7 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: true,
                     plugins: {
                         legend: {
                             position: 'top'
@@ -374,16 +418,10 @@
         }
 
         function confirmDayChange(selectedDay) {
-            const confirmation = confirm('日を変更するとカウンターがリセットされます。よろしいですか？');
-            if (confirmation) {
-                currentDay = selectedDay;
-                localStorage.setItem('currentDay', currentDay);
-                document.getElementById('current-day').innerText = `現在の設定: ${currentDay}日目`;
-                updateCountersAndCharts();
-            } else {
-                // Reset the radio buttons to the current day
-                document.querySelector(`input[name="day"][value="${currentDay}"]`).checked = true;
-            }
+            currentDay = selectedDay;
+            localStorage.setItem('currentDay', currentDay);
+            document.getElementById('current-day').innerText = `現在の設定: ${currentDay}日目`;
+            updateCountersAndCharts();
         }
 
         function toggleDarkMode(isDark) {
@@ -424,11 +462,6 @@
 
             // Initialize counters and charts
             updateCountersAndCharts();
-
-            window.addEventListener('beforeunload', (event) => {
-                event.preventDefault();
-                event.returnValue = '';
-            });
         });
     </script>
 </body>
