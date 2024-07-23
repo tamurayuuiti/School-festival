@@ -8,6 +8,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f4f9;
+            color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -15,7 +16,14 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        .dark-mode {
+            background-color: #222;
+            color: #ddd;
+        }
+
         .counters-section, .charts-section {
             display: flex;
             flex-direction: column;
@@ -36,19 +44,17 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 15px;
             text-align: center;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background-color 0.3s, color 0.3s;
         }
         .counter-container:hover {
             transform: translateY(-5px);
         }
         .count {
             font-size: 1.5em;
-            color: #333;
             margin: 10px 0;
         }
         .amount {
             font-size: 1em;
-            color: #666;
         }
         .button-group {
             display: flex;
@@ -57,7 +63,7 @@
             margin: 10px 0;
         }
         button {
-            padding: 16px 24px;
+            padding: 18px 26px;
             font-size: 24px;
             border: none;
             border-radius: 50%;
@@ -68,6 +74,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            touch-action: manipulation; /* Better support for touch devices */
         }
         button:hover {
             background-color: #0056b3;
@@ -85,6 +92,7 @@
             width: 100%;
             max-width: 350px;
             height: 250px;
+            transition: background-color 0.3s;
         }
         .totals-container {
             margin-top: 20px;
@@ -95,6 +103,7 @@
             text-align: center;
             width: 100%;
             max-width: 900px;
+            transition: background-color 0.3s, color 0.3s;
         }
         .total-title {
             font-size: 1.3em;
@@ -102,7 +111,6 @@
         }
         .total-value {
             font-size: 1.1em;
-            color: #333;
         }
         .day-select {
             margin-bottom: 20px;
@@ -364,6 +372,32 @@
                 document.querySelector(`input[name="day"][value="${selectedDay === '1' ? '2' : '1'}"]`).checked = true;
             }
         }
+
+        function toggleDarkMode(isDark) {
+            const body = document.body;
+            if (isDark) {
+                body.classList.add('dark-mode');
+                document.querySelectorAll('.counter-container, .totals-container').forEach(el => {
+                    el.style.backgroundColor = '#333';
+                    el.style.color = '#ddd';
+                });
+            } else {
+                body.classList.remove('dark-mode');
+                document.querySelectorAll('.counter-container, .totals-container').forEach(el => {
+                    el.style.backgroundColor = '#fff';
+                    el.style.color = '#333';
+                });
+            }
+        }
+
+        // Check if the user prefers dark mode and apply it
+        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        toggleDarkMode(isDarkMode);
+
+        // Listen for changes to the prefers-color-scheme media query
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            toggleDarkMode(e.matches);
+        });
 
         // Set initial limits for Day One on page load
         document.addEventListener('DOMContentLoaded', () => {
