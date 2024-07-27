@@ -36,7 +36,7 @@
         #counters {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            grid-gap: 20px;
+            grid-gap: 15px; /* 横の間隔を小さくする */
             padding: 20px;
             width: 100%;
             justify-items: center;
@@ -47,10 +47,10 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 15px;
+            padding: 20px; /* カウンターのサイズを少し大きくする */
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            max-width: 180px;
+            max-width: 200px; /* カウンターの最大幅を増やす */
         }
 
         .dark-mode .counter-container {
@@ -131,7 +131,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 100%;
-            max-width: 900px;
+            max-width: 600px; /* 合計値表示領域の幅を小さくする */
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -191,10 +191,15 @@
         @media (max-width: 768px) {
             #counters {
                 grid-template-columns: repeat(2, 1fr);
+                grid-gap: 20px; /* 横の間隔を縦と同じにする */
             }
 
             .counter-container {
                 max-width: 100%;
+            }
+
+            .totals-container {
+                max-width: 100%; /* 縦画面では幅をデバイス幅に合わせる */
             }
 
             .charts-section {
