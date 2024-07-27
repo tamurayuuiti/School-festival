@@ -47,10 +47,10 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px; /* カウンターサイズを大きくする */
+            padding: 20px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            max-width: 200px; /* カウンターサイズを大きくする */
+            max-width: 180px;
         }
 
         .dark-mode .counter-container {
@@ -63,7 +63,7 @@
         }
 
         .counter-container h2 {
-            font-size: 1.2em;
+            font-size: 1.5em;
             line-height: 1.5;
             font-weight: 600;
             margin: 0;
@@ -71,17 +71,17 @@
         }
 
         .count {
-            font-size: 1.5em;
+            font-size: 2em;
             margin: 10px 0;
         }
 
         .remaining {
-            font-size: 0.9em;
-            color: inherit; /* 他のテキストと同じ色に */
+            font-size: 1em;
+            color: inherit;
         }
 
         .amount {
-            font-size: 1em;
+            font-size: 1.2em;
         }
 
         .button-group {
@@ -92,8 +92,8 @@
         }
 
         button {
-            padding: 14px 24px;
-            font-size: 20px;
+            padding: 16px 28px;
+            font-size: 1.2em;
             border: none;
             border-radius: 8px;
             background-color: #007BFF;
@@ -141,12 +141,12 @@
         }
 
         .total-title {
-            font-size: 1.3em;
+            font-size: 1.5em;
             margin-bottom: 10px;
         }
 
         .total-value {
-            font-size: 1.1em;
+            font-size: 1.3em;
         }
 
         .day-select {
@@ -157,11 +157,11 @@
 
         .day-select label {
             margin-right: 10px;
-            font-size: 1em;
+            font-size: 1.2em;
         }
 
         .current-day {
-            font-size: 1.5em;
+            font-size: 1.7em;
             margin-bottom: 20px;
             text-align: center;
             font-weight: bold;
@@ -187,24 +187,18 @@
             justify-content: center;
         }
 
-   /* 縦画面用のスタイル調整 */
-@media (max-width: 768px) {
-    #counters {
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 20px;
-        justify-content: center;
-    }
+        /* 縦画面用のスタイル調整 */
+        @media (max-width: 768px) {
+            #counters {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 20px;
+                justify-content: center;
+            }
 
-    .counter-container {
-        max-width: 95%; /* カウンターを画面幅にフィットさせる */
-        padding: 50px; /* カウンターサイズを大きくする */
-    }
-
-    .totals-container {
-        max-width: 80%;
-    }
-}
-
+            .counter-container {
+                max-width: 95%;
+                padding: 50px; /* カウンターサイズを大きくする */
+            }
 
             .charts-section {
                 flex-direction: column;
@@ -217,7 +211,43 @@
             }
 
             .totals-container {
-                max-width: 80%; /* 合計値表示エリアをさらに小さくする */
+                max-width: 80%;
+            }
+
+            .counter-container h2 {
+                font-size: 1.3em;
+            }
+
+            .count {
+                font-size: 1.8em;
+            }
+
+            .remaining {
+                font-size: 0.9em;
+            }
+
+            .amount {
+                font-size: 1.1em;
+            }
+
+            button {
+                padding: 14px 24px;
+                font-size: 1.1em;
+            }
+        }
+
+        /* 横画面用のスタイル調整 */
+        @media (min-width: 769px) {
+            .totals-container {
+                max-width: 100%; /* 合計値表示エリアの幅を広くする */
+            }
+
+            .charts-section {
+                flex-direction: row; /* 横並びに配置 */
+            }
+
+            .chart-container {
+                max-width: 50%; /* 横並びに配置 */
             }
         }
     </style>
