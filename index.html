@@ -187,17 +187,24 @@
             justify-content: center;
         }
 
-        /* 縦画面用のスタイル調整 */
-        @media (max-width: 768px) {
-            #counters {
-                grid-template-columns: repeat(2, 1fr);
-                grid-gap: 20px; /* 水平方向の間隔を調整 */
-                justify-content: center; /* カウンターを画面中央に配置 */
-            }
+   /* 縦画面用のスタイル調整 */
+@media (max-width: 768px) {
+    #counters {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+        justify-content: center;
+    }
 
-            .counter-container {
-                max-width: 90%; /* カウンターを画面幅にフィットさせる */
-            }
+    .counter-container {
+        max-width: 95%; /* カウンターを画面幅にフィットさせる */
+        padding: 25px; /* カウンターサイズを大きくする */
+    }
+
+    .totals-container {
+        max-width: 80%;
+    }
+}
+
 
             .charts-section {
                 flex-direction: column;
