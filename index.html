@@ -63,7 +63,7 @@
         }
 
         .counter-container h2 {
-            font-size: 1.5em;
+            font-size: 1.2em;
             line-height: 1.5;
             font-weight: 600;
             margin: 0;
@@ -71,17 +71,17 @@
         }
 
         .count {
-            font-size: 2em;
+            font-size: 1.5em;
             margin: 10px 0;
         }
 
         .remaining {
-            font-size: 1em;
+            font-size: 0.9em;
             color: inherit;
         }
 
         .amount {
-            font-size: 1.2em;
+            font-size: 1em;
         }
 
         .button-group {
@@ -92,7 +92,7 @@
         }
 
         button {
-            padding: 16px 28px;
+            padding: 14px 24px;
             font-size: 1.2em;
             border: none;
             border-radius: 8px;
@@ -197,7 +197,6 @@
 
             .counter-container {
                 max-width: 95%;
-                padding: 50px; /* カウンターサイズを大きくする */
             }
 
             .charts-section {
@@ -231,23 +230,46 @@
             }
 
             button {
-                padding: 14px 24px;
-                font-size: 1.1em;
+                padding: 16px 26px;
+                font-size: 1.3em;
+            }
+        }
+
+        /* 中くらいの幅の画面用のスタイル調整 */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            #counters {
+                grid-template-columns: repeat(3, 1fr);
+                grid-gap: 20px;
+                justify-content: center;
+            }
+
+            .counter-container {
+                max-width: 80%;
             }
         }
 
         /* 横画面用のスタイル調整 */
-        @media (min-width: 769px) {
+        @media (min-width: 1025px) {
+            #counters {
+                grid-template-columns: repeat(5, 1fr);
+                grid-gap: 20px;
+                justify-content: center;
+            }
+
+            .counter-container {
+                max-width: 100%;
+            }
+
             .totals-container {
-                max-width: 100%; /* 合計値表示エリアの幅を広くする */
+                max-width: 100%;
             }
 
             .charts-section {
-                flex-direction: row; /* 横並びに配置 */
+                flex-direction: row;
             }
 
             .chart-container {
-                max-width: 50%; /* 横並びに配置 */
+                max-width: 50%;
             }
         }
     </style>
