@@ -191,7 +191,8 @@
         @media (max-width: 768px) {
             #counters {
                 grid-template-columns: repeat(2, 1fr);
-                grid-gap: 40px; /* 水平方向の間隔を調整 */
+                grid-gap: 20px; /* 水平方向の間隔を調整 */
+                justify-content: center; /* カウンターを画面中央に配置 */
             }
 
             .counter-container {
@@ -209,7 +210,7 @@
             }
 
             .totals-container {
-                max-width: 90%; /* 合計値表示エリアをさらに小さくする */
+                max-width: 80%; /* 合計値表示エリアをさらに小さくする */
             }
         }
     </style>
