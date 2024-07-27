@@ -47,10 +47,10 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px; /* カウンターサイズを大きくする */
+            padding: 20px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            max-width: 200px; /* カウンターサイズを大きくする */
+            max-width: 200px;
         }
 
         .dark-mode .counter-container {
@@ -191,11 +191,11 @@
         @media (max-width: 768px) {
             #counters {
                 grid-template-columns: repeat(2, 1fr);
-                grid-gap: 20px; /* 水平方向の間隔を調整 */
+                grid-gap: 15px; /* 水平方向の間隔を調整 */
             }
 
             .counter-container {
-                max-width: 100%;
+                max-width: 45%; /* カウンターの幅を増やす */
             }
 
             .charts-section {
@@ -209,7 +209,7 @@
             }
 
             .totals-container {
-                max-width: 95%; /* 合計値表示エリアを少し狭くする */
+                max-width: 90%; /* 合計値表示エリアを少し狭くする */
             }
         }
     </style>
