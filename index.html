@@ -40,6 +40,7 @@
             padding: 20px;
             width: 100%;
             justify-items: center;
+            justify-content: center; /* 横並びで中央に揃える */
         }
 
         .counter-container {
@@ -63,7 +64,7 @@
         }
 
         .counter-container h2 {
-            font-size: 1.2em;
+            font-size: 1.5em;
             line-height: 1.5;
             font-weight: 600;
             margin: 0;
@@ -71,17 +72,17 @@
         }
 
         .count {
-            font-size: 1.5em;
+            font-size: 2em;
             margin: 10px 0;
         }
 
         .remaining {
-            font-size: 0.9em;
+            font-size: 1em;
             color: inherit;
         }
 
         .amount {
-            font-size: 1em;
+            font-size: 1.2em;
         }
 
         .button-group {
@@ -92,7 +93,7 @@
         }
 
         button {
-            padding: 14px 24px;
+            padding: 16px 28px;
             font-size: 1.2em;
             border: none;
             border-radius: 8px;
@@ -197,6 +198,7 @@
 
             .counter-container {
                 max-width: 95%;
+                padding: 20px; /* フレームサイズを保持 */
             }
 
             .charts-section {
@@ -214,62 +216,39 @@
             }
 
             .counter-container h2 {
-                font-size: 1.3em;
+                font-size: 1.8em; /* テキストサイズを調整 */
             }
 
             .count {
-                font-size: 1.8em;
+                font-size: 2.5em; /* カウントのサイズを調整 */
             }
 
             .remaining {
-                font-size: 0.9em;
+                font-size: 1.2em; /* 残りのテキストサイズを調整 */
             }
 
             .amount {
-                font-size: 1.1em;
+                font-size: 1.4em; /* 金額のテキストサイズを調整 */
             }
 
             button {
-                padding: 16px 26px;
-                font-size: 1.3em;
-            }
-        }
-
-        /* 中くらいの幅の画面用のスタイル調整 */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            #counters {
-                grid-template-columns: repeat(3, 1fr);
-                grid-gap: 20px;
-                justify-content: center;
-            }
-
-            .counter-container {
-                max-width: 80%;
+                padding: 18px 32px; /* ボタンサイズを調整 */
+                font-size: 1.4em; /* ボタンのフォントサイズを調整 */
             }
         }
 
         /* 横画面用のスタイル調整 */
-        @media (min-width: 1025px) {
-            #counters {
-                grid-template-columns: repeat(5, 1fr);
-                grid-gap: 20px;
-                justify-content: center;
-            }
-
-            .counter-container {
-                max-width: 100%;
-            }
-
+        @media (min-width: 769px) {
             .totals-container {
-                max-width: 100%;
+                max-width: 100%; /* 合計値表示エリアの幅を広くする */
             }
 
             .charts-section {
-                flex-direction: row;
+                flex-direction: row; /* 横並びに配置 */
             }
 
             .chart-container {
-                max-width: 50%;
+                max-width: 50%; /* 横並びに配置 */
             }
         }
     </style>
