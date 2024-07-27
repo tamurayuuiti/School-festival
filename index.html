@@ -40,7 +40,7 @@
             padding: 20px;
             width: 100%;
             justify-items: center;
-            justify-content: center; /* 横並びで中央に揃える */
+            justify-content: center;
         }
 
         .counter-container {
@@ -194,11 +194,12 @@
                 grid-template-columns: repeat(2, 1fr);
                 grid-gap: 20px;
                 justify-content: center;
+                width: 90%; /* 横幅を90%に調整して中央に配置 */
             }
 
             .counter-container {
-                max-width: 95%;
-                padding: 20px; /* フレームサイズを保持 */
+                max-width: 90%;
+                padding: 15px; /* カウンターサイズを少し小さくする */
             }
 
             .charts-section {
@@ -216,24 +217,24 @@
             }
 
             .counter-container h2 {
-                font-size: 1.8em; /* テキストサイズを調整 */
+                font-size: 1.6em; /* テキストサイズを少し小さく調整 */
             }
 
             .count {
-                font-size: 2.5em; /* カウントのサイズを調整 */
+                font-size: 2.2em; /* カウントのサイズを少し小さく調整 */
             }
 
             .remaining {
-                font-size: 1.2em; /* 残りのテキストサイズを調整 */
+                font-size: 1.1em; /* 残りのテキストサイズを調整 */
             }
 
             .amount {
-                font-size: 1.4em; /* 金額のテキストサイズを調整 */
+                font-size: 1.3em; /* 金額のテキストサイズを調整 */
             }
 
             button {
-                padding: 18px 32px; /* ボタンサイズを調整 */
-                font-size: 1.4em; /* ボタンのフォントサイズを調整 */
+                padding: 15px 26px; /* ボタンサイズを少し小さく調整 */
+                font-size: 1.2em; /* ボタンのフォントサイズを調整 */
             }
         }
 
