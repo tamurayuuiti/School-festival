@@ -229,6 +229,21 @@
                 font-size: 1.2em;
             }
         }
+
+        @media (max-width: 768px) {
+            /* Portrait mode adjustments */
+            #counters {
+                grid-template-columns: repeat(2, 1fr); /* Two columns for portrait mode */
+                grid-gap: 15px;
+                padding: 10px;
+                width: 90%; /* Ensure consistent space on both sides */
+            }
+
+            .counter-container {
+                width: 100%;
+                padding: 20px;
+            }
+        }
     </style>
     <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -504,22 +519,6 @@
             }
             mediaQuery.addEventListener('change', applyTheme);
             applyTheme(mediaQuery);
-
-            // Function to adjust layout based on screen size
-            function adjustLayout() {
-                const screenWidth = window.innerWidth;
-                const counters = document.getElementById('counters');
-
-                // Calculate and set margins to ensure spacing on both sides
-                const maxCounterWidth = 700; // Maximum width for the counters section
-                const sideMargin = Math.max((screenWidth - maxCounterWidth) / 2, 10);
-                counters.style.marginLeft = `${sideMargin}px`;
-                counters.style.marginRight = `${sideMargin}px`;
-            }
-
-            // Adjust layout on load and when window is resized
-            window.addEventListener('resize', adjustLayout);
-            adjustLayout();
 
             // Attach changeCount and confirmDayChange functions to window for button onclick access
             window.changeCount = changeCount;
