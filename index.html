@@ -204,21 +204,12 @@
         }
 
         @media (min-width: 769px) {
+            /* Landscape mode adjustments */
             #counters {
                 grid-template-columns: repeat(5, 1fr);
                 grid-gap: 20px;
-                justify-items: center; /* 中央に配置 */
-                justify-content: center; /* Ensure the counters are centered in landscape mode */
-            }
-
-            .charts-section {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-
-            .chart-container {
-                max-width: 400px;
-                margin: 0 10px;
+                justify-items: center;
+                justify-content: center;
             }
 
             .counter-container {
@@ -226,12 +217,35 @@
             }
 
             .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.2em;
+                font-size: 1.3em; /* Increase font size for landscape mode */
+            }
+
+            .count {
+                font-size: 2.2em; /* Larger count value */
             }
 
             button {
                 padding: 14px 24px;
                 font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Portrait mode adjustments */
+            #counters {
+                grid-template-columns: repeat(1, 1fr); /* One column for portrait mode */
+                grid-gap: 15px;
+                padding: 10px;
+            }
+
+            .counter-container {
+                width: calc(100% - 20px); /* Fit the screen size with some margin */
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .counters-section {
+                padding: 0 15px; /* Add space on both sides */
             }
         }
     </style>
