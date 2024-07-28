@@ -43,7 +43,8 @@
             padding: 20px;
             width: 100%;
             max-width: 100%;
-            justify-items: center;
+            align-items: center; /* Center items vertically */
+            justify-items: center; /* Center items horizontally */
             box-sizing: border-box;
             margin: 0 auto;
         }
@@ -202,11 +203,12 @@
             box-sizing: border-box;
         }
 
-        @media (min-width: 769px) {
+        @media (min-width: 769px) and (orientation: landscape) {
             #counters {
                 grid-template-columns: repeat(5, 1fr);
                 grid-gap: 20px;
-                justify-items: center; /* 中央に配置 */
+                align-items: center;
+                justify-items: center; /* Center items in grid */
             }
 
             .charts-section {
@@ -230,6 +232,14 @@
             button {
                 padding: 14px 24px;
                 font-size: 1.2em;
+            }
+        }
+
+        @media (orientation: portrait) {
+            #counters {
+                grid-template-columns: repeat(2, 1fr);
+                justify-items: center;
+                grid-gap: 10px;
             }
         }
     </style>
