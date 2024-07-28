@@ -228,6 +228,16 @@
                 padding: 14px 24px;
                 font-size: 1.2em;
             }
+
+            .charts-section {
+                flex-direction: row; /* Display charts side by side */
+                justify-content: space-between;
+            }
+
+            .chart-container {
+                max-width: 400px;
+                margin: 0 10px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -242,6 +252,16 @@
             .counter-container {
                 width: 100%;
                 padding: 20px;
+            }
+
+            .charts-section {
+                flex-direction: column; /* Display charts vertically */
+                justify-content: center;
+            }
+
+            .chart-container {
+                max-width: 100%;
+                margin: 10px 0;
             }
         }
     </style>
@@ -384,7 +404,9 @@
                     const count = parseInt(counters[type], 10) || 0;
                     const remaining = limits[currentDay][type] - count; // 残りカウントを計算
                     document.getElementById(`${type}-count`).innerText = `${count}/${limits[currentDay][type]}`;
-                    document.getElementById(`${type}-remaining`).innerText = `残り: ${remaining} 個`; // 残りカウントを日本語で表示
+
+                    // Display "Sold Out" in Japanese when remaining is zero
+                    document.getElementById(`${type}-remaining`).innerText = remaining === 0 ? '売り切れ' : `残り: ${remaining} 個`;
                     document.getElementById(`${type}-amount`).innerText = `${count * values[type]} 円`;
                 }
                 updateTotals(counters);
