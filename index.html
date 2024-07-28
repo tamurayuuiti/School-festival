@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+￥<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -44,6 +44,7 @@
             width: 100%;
             max-width: 100%;
             justify-items: center;
+            justify-content: center; /* 横画面でも中央に配置 */
             box-sizing: border-box;
             margin: 0 auto; /* 中央に配置 */
         }
@@ -210,7 +211,7 @@
 
             .charts-section {
                 flex-direction: row;
-                justify-content: space-between;
+                justify-content: center; /* 横画面でも中央に配置 */
             }
 
             .chart-container {
@@ -463,57 +464,4 @@
                     parseInt(counters.jdk, 10) || 0
                 ];
                 const valueData = [
-                    (parseInt(counters.plain, 10) || 0) * values.plain, 
-                    (parseInt(counters.choco, 10) || 0) * values.choco, 
-                    (parseInt(counters.strawberry, 10) || 0) * values.strawberry, 
-                    (parseInt(counters.matcha, 10) || 0) * values.matcha, 
-                    (parseInt(counters.jdk, 10) || 0) * values.jdk
-                ];
-
-                countPieChart.data.datasets[0].data = countData;
-                countPieChart.update();
-
-                valuePieChart.data.datasets[0].data = valueData;
-                valuePieChart.update();
-            }
-
-            // Handle day change
-            function confirmDayChange(selectedDay) {
-                // Remove the previous listener
-                countersRef.child(currentDay).off('value');
-
-                // Set the current day
-                currentDay = selectedDay === '1' ? 'day1' : 'day2';
-                document.getElementById('current-day').innerText = `現在の設定: ${currentDay === 'day1' ? '1日目' : '2日目'}`;
-
-                // Fetch and update the UI for the new day
-                countersRef.child(currentDay).once('value').then(snapshot => {
-                    updateUI(snapshot.val() || {});
-                });
-
-                // Set up the real-time listener for the new day
-                updateRealTimeListener();
-            }
-
-            // ダークモードを自動切替
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            function applyTheme(e) {
-                if (e.matches) {
-                    document.body.classList.add('dark-mode');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                }
-            }
-            mediaQuery.addEventListener('change', applyTheme);
-            applyTheme(mediaQuery);
-
-            // Attach changeCount and confirmDayChange functions to window for button onclick access
-            window.changeCount = changeCount;
-            window.confirmDayChange = confirmDayChange;
-
-            // Check Firebase initialization and log
-            console.log('Firebase initialized with project:', firebaseConfig.projectId);
-        });
-    </script>
-</body>
-</html>
+￥
