@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>リアルタイムカウンター</title>
     <style>
         body {
@@ -38,13 +38,15 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Default to two columns */
-            grid-gap: 20px;
+            grid-template-columns: repeat(2, 1fr); /* Two columns by default */
+            grid-gap: 10px;
             padding: 20px;
             width: 100%;
             max-width: 100%;
+            justify-items: center;
             box-sizing: border-box;
-            justify-content: center;
+            margin: 0 auto;
+            justify-content: center; /* Horizontally center the grid items */
         }
 
         .counter-container {
@@ -52,11 +54,11 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            box-sizing: border-box;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .dark-mode .counter-container {
@@ -202,12 +204,29 @@
         }
 
         @media (min-width: 769px) {
-            /* Styles for wider screens (landscape mode) */
+            /* Landscape mode adjustments */
             #counters {
                 grid-template-columns: repeat(5, 1fr);
                 grid-gap: 20px;
                 justify-items: center;
                 justify-content: center;
+            }
+
+            .counter-container {
+                padding: 20px;
+            }
+
+            .counter-container h2, .count, .remaining, .amount {
+                font-size: 1.3em; /* Increase font size for landscape mode */
+            }
+
+            .count {
+                font-size: 2.2em; /* Larger count value */
+            }
+
+            button {
+                padding: 14px 24px;
+                font-size: 1.2em;
             }
 
             .charts-section {
@@ -222,17 +241,17 @@
         }
 
         @media (max-width: 768px) {
-            /* Styles for smartphones (portrait mode) */
+            /* Portrait mode adjustments */
             #counters {
                 grid-template-columns: repeat(2, 1fr); /* Two columns for portrait mode */
                 grid-gap: 15px;
                 padding: 10px;
-                width: 100%; /* Use full width to ensure centering */
+                width: 90%; /* Ensure consistent space on both sides */
             }
 
             .counter-container {
-                padding: 1.5rem;
                 width: 100%;
+                padding: 20px;
             }
 
             .charts-section {
