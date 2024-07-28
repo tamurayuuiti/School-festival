@@ -38,15 +38,13 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two columns by default */
-            grid-gap: 10px;
+            grid-template-columns: repeat(2, 1fr); /* Default to two columns */
+            grid-gap: 20px;
             padding: 20px;
             width: 100%;
             max-width: 100%;
-            justify-items: center;
             box-sizing: border-box;
-            margin: 0 auto;
-            justify-content: center; /* Horizontally center the grid items */
+            justify-content: center;
         }
 
         .counter-container {
@@ -54,13 +52,11 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
+            padding: 20px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            width: 100%;
-            max-width: 90vw; /* Relative max width for consistent scaling */
             box-sizing: border-box;
-            margin: 0 auto;
+            width: 100%;
         }
 
         .dark-mode .counter-container {
@@ -206,29 +202,12 @@
         }
 
         @media (min-width: 769px) {
-            /* Styles for wider screens (tablets and desktops) */
+            /* Styles for wider screens (landscape mode) */
             #counters {
                 grid-template-columns: repeat(5, 1fr);
                 grid-gap: 20px;
                 justify-items: center;
                 justify-content: center;
-            }
-
-            .counter-container {
-                padding: 20px;
-            }
-
-            .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.3em; /* Increase font size for landscape mode */
-            }
-
-            .count {
-                font-size: 2.2em; /* Larger count value */
-            }
-
-            button {
-                padding: 14px 24px;
-                font-size: 1.2em;
             }
 
             .charts-section {
@@ -243,17 +222,17 @@
         }
 
         @media (max-width: 768px) {
-            /* Styles for smartphones */
+            /* Styles for smartphones (portrait mode) */
             #counters {
                 grid-template-columns: repeat(2, 1fr); /* Two columns for portrait mode */
                 grid-gap: 15px;
-                padding: 1rem; /* Use relative padding */
-                width: 90%; /* Ensure consistent space on both sides */
+                padding: 10px;
+                width: 100%; /* Use full width to ensure centering */
             }
 
             .counter-container {
-                width: 100%;
                 padding: 1.5rem;
+                width: 100%;
             }
 
             .charts-section {
