@@ -38,13 +38,12 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             grid-gap: 10px;
             padding: 20px;
             width: 100%;
             max-width: 100%;
-            align-items: center; /* Center items vertically */
-            justify-items: center; /* Center items horizontally */
+            justify-items: center;
             box-sizing: border-box;
             margin: 0 auto;
         }
@@ -203,12 +202,11 @@
             box-sizing: border-box;
         }
 
-        @media (min-width: 769px) and (orientation: landscape) {
+        @media (min-width: 769px) {
             #counters {
                 grid-template-columns: repeat(5, 1fr);
                 grid-gap: 20px;
-                align-items: center;
-                justify-items: center; /* Center items in grid */
+                justify-items: center; /* 中央に配置 */
             }
 
             .charts-section {
@@ -232,14 +230,6 @@
             button {
                 padding: 14px 24px;
                 font-size: 1.2em;
-            }
-        }
-
-        @media (orientation: portrait) {
-            #counters {
-                grid-template-columns: repeat(2, 1fr);
-                justify-items: center;
-                grid-gap: 10px;
             }
         }
     </style>
