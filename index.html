@@ -17,7 +17,6 @@
             margin: 0;
             padding: 20px;
             transition: background-color 0.3s, color 0.3s;
-            box-sizing: border-box;
         }
 
         .dark-mode {
@@ -32,7 +31,6 @@
             width: 100%;
             max-width: 900px;
             align-items: center;
-            box-sizing: border-box;
         }
 
         #counters {
@@ -43,7 +41,6 @@
             width: 100%;
             justify-items: center;
             justify-content: center;
-            box-sizing: border-box;
         }
 
         .counter-container {
@@ -51,12 +48,10 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 25px;
+            padding: 30px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            width: 90%; /* 幅を90%に設定し、レスポンシブ対応 */
-            max-width: 400px; /* 最大幅を400pxに制限 */
-            box-sizing: border-box;
+            max-width: 95%;
         }
 
         .dark-mode .counter-container {
@@ -99,8 +94,8 @@
         }
 
         button {
-            padding: 16px 24px;
-            font-size: 1.2em;
+            padding: 18px 32px;
+            font-size: 1.4em;
             border: none;
             border-radius: 8px;
             background-color: #007BFF;
@@ -144,7 +139,6 @@
             width: 100%;
             max-width: 85%;
             transition: background-color 0.3s, color 0.3s;
-            box-sizing: border-box;
         }
 
         .dark-mode .totals-container {
@@ -196,41 +190,35 @@
             margin: 10px 0;
             display: flex;
             justify-content: center;
-            box-sizing: border-box;
         }
 
         @media (min-width: 769px) {
-            /* 横画面やPC最大画面モードでは元のレイアウトに戻す */
             #counters {
                 grid-template-columns: repeat(5, 1fr);
                 grid-gap: 20px;
-                padding: 20px;
-            }
-
-            .counter-container {
-                padding: 15px;
-                max-width: 100%;
-                width: 100%;
-            }
-
-            .counter-container h2, .count, .remaining, .amount {
-                font-size: 1em;
-            }
-
-            button {
-                padding: 14px 20px;
-                font-size: 1em;
             }
 
             .charts-section {
                 flex-direction: row;
                 justify-content: space-between;
-                align-items: center;
             }
 
             .chart-container {
                 max-width: 400px;
                 margin: 0 10px;
+            }
+
+            .counter-container {
+                padding: 20px;
+            }
+
+            .counter-container h2, .count, .remaining, .amount {
+                font-size: 1.2em;
+            }
+
+            button {
+                padding: 14px 24px;
+                font-size: 1.2em;
             }
         }
     </style>
