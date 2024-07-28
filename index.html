@@ -48,7 +48,7 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px; /* サイズを大きくするためのパディングの増加 */
+            padding: 30px; /* 縦画面でサイズを拡大 */
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
             max-width: 95%;
@@ -65,11 +65,11 @@
         }
 
         .counter-container h2 {
-            font-size: 1.7em; /* フォントサイズを大きく */
+            font-size: 1.6em; /* フォントサイズを大きく */
             line-height: 1.5;
             font-weight: 600;
             margin: 0;
-            padding: 5px 0;
+            padding: 10px 0;
         }
 
         .count {
@@ -83,19 +83,19 @@
         }
 
         .amount {
-            font-size: 1.5em; /* フォントサイズを大きく */
+            font-size: 1.4em; /* フォントサイズを大きく */
         }
 
         .button-group {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 10px 0;
+            gap: 15px;
+            margin: 15px 0;
         }
 
         button {
-            padding: 18px 32px; /* サイズを大きく */
-            font-size: 1.4em; /* フォントサイズを大きく */
+            padding: 18px 32px; /* ボタンサイズを大きく */
+            font-size: 1.4em; /* ボタンのフォントサイズを大きく */
             border: none;
             border-radius: 8px;
             background-color: #007BFF;
@@ -137,7 +137,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 100%;
-            max-width: 85%; /* 幅を少し狭く */
+            max-width: 85%;
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -206,6 +206,19 @@
             .chart-container {
                 max-width: 400px;
                 margin: 0 10px;
+            }
+
+            .counter-container {
+                padding: 20px; /* 横画面では元のサイズを維持 */
+            }
+
+            .counter-container h2, .count, .remaining, .amount {
+                font-size: 1.2em; /* 横画面ではフォントサイズを元に戻す */
+            }
+
+            button {
+                padding: 14px 24px;
+                font-size: 1.2em;
             }
         }
     </style>
