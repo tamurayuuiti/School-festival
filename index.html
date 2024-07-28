@@ -200,33 +200,37 @@
         }
 
         @media (min-width: 769px) {
+            /* 横画面やPC最大画面モードでは元のレイアウトに戻す */
             #counters {
                 grid-template-columns: repeat(5, 1fr);
                 grid-gap: 20px;
+                padding: 20px;
+            }
+
+            .counter-container {
+                padding: 15px;
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .counter-container h2, .count, .remaining, .amount {
+                font-size: 1em;
+            }
+
+            button {
+                padding: 14px 20px;
+                font-size: 1em;
             }
 
             .charts-section {
                 flex-direction: row;
                 justify-content: space-between;
+                align-items: center;
             }
 
             .chart-container {
                 max-width: 400px;
                 margin: 0 10px;
-            }
-
-            .counter-container {
-                padding: 20px;
-                max-width: 100%;
-            }
-
-            .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.2em;
-            }
-
-            button {
-                padding: 14px 24px;
-                font-size: 1.2em;
             }
         }
     </style>
