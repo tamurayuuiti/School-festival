@@ -57,7 +57,7 @@
             padding: 25px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            max-width: 100%;
+            width: 100%;
             box-sizing: border-box;
         }
 
@@ -236,6 +236,12 @@
                 grid-template-columns: repeat(2, 1fr); /* Two columns for portrait mode */
                 grid-gap: 15px;
                 padding: 10px;
+                width: 90%; /* Ensure consistent space on both sides */
+            }
+
+            .counter-container {
+                width: 100%;
+                padding: 20px;
             }
         }
     </style>
