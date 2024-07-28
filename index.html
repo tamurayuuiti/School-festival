@@ -35,12 +35,11 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 15px;
             padding: 20px;
             width: 100%;
             justify-items: center;
-            justify-content: center; /* 中央に配置 */
         }
 
         .counter-container {
@@ -48,9 +47,10 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
+            max-width: 95%; /* 幅を狭くして縦画面での見やすさを向上 */
         }
 
         .dark-mode .counter-container {
@@ -64,7 +64,7 @@
         }
 
         .counter-container h2 {
-            font-size: 1.2em;
+            font-size: 1.5em;
             line-height: 1.5;
             font-weight: 600;
             margin: 0;
@@ -72,17 +72,17 @@
         }
 
         .count {
-            font-size: 1.5em;
+            font-size: 1.7em;
             margin: 10px 0;
         }
 
         .remaining {
-            font-size: 0.9em;
+            font-size: 1em;
             color: inherit;
         }
 
         .amount {
-            font-size: 1em;
+            font-size: 1.2em;
         }
 
         .button-group {
@@ -93,8 +93,8 @@
         }
 
         button {
-            padding: 14px 24px;
-            font-size: 20px;
+            padding: 16px 28px;
+            font-size: 1.2em;
             border: none;
             border-radius: 8px;
             background-color: #007BFF;
@@ -146,12 +146,12 @@
         }
 
         .total-title {
-            font-size: 1.3em;
+            font-size: 1.5em;
             margin-bottom: 10px;
         }
 
         .total-value {
-            font-size: 1.1em;
+            font-size: 1.3em;
         }
 
         .day-select {
@@ -162,11 +162,11 @@
 
         .day-select label {
             margin-right: 10px;
-            font-size: 1em;
+            font-size: 1.2em;
         }
 
         .current-day {
-            font-size: 1.5em;
+            font-size: 1.7em;
             margin-bottom: 20px;
             text-align: center;
             font-weight: bold;
@@ -175,8 +175,7 @@
 
         .charts-section {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
             width: 100%;
             max-width: 900px;
@@ -186,48 +185,26 @@
 
         .chart-container {
             flex: 1;
-            max-width: 400px;
-            margin: 0 10px;
+            max-width: 100%;
+            margin: 10px 0;
             display: flex;
             justify-content: center;
         }
 
-        @media (max-width: 768px) {
+        @media (min-width: 769px) {
             #counters {
-                grid-template-columns: repeat(2, 1fr);
-                grid-gap: 15px;
-                justify-content: center;
-            }
-
-            .counter-container {
-                max-width: 90%;
-                padding: 10px; /* 幅を狭く */
-            }
-
-            .count {
-                font-size: 1.3em;
-            }
-
-            .amount {
-                font-size: 0.9em;
-            }
-
-            .total-title {
-                font-size: 1.2em;
-            }
-
-            .total-value {
-                font-size: 1em;
+                grid-template-columns: repeat(5, 1fr); /* 横画面でのカウンター配置 */
+                grid-gap: 20px;
             }
 
             .charts-section {
-                flex-direction: column;
-                align-items: stretch;
+                flex-direction: row; /* 横画面でのチャート配置 */
+                justify-content: space-between;
             }
 
             .chart-container {
-                max-width: 100%;
-                margin-bottom: 20px;
+                max-width: 400px;
+                margin: 0 10px;
             }
         }
     </style>
