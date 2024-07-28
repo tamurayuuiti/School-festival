@@ -40,6 +40,7 @@
             padding: 20px;
             width: 100%;
             justify-items: center;
+            justify-content: center; /* 中央に配置 */
         }
 
         .counter-container {
@@ -50,7 +51,7 @@
             padding: 20px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            max-width: 95%; /* 幅を狭くして縦画面での見やすさを向上 */
+            max-width: 95%;
         }
 
         .dark-mode .counter-container {
@@ -136,7 +137,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 100%;
-            max-width: 900px;
+            max-width: 85%; /* 幅を少し狭く */
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -193,12 +194,12 @@
 
         @media (min-width: 769px) {
             #counters {
-                grid-template-columns: repeat(5, 1fr); /* 横画面でのカウンター配置 */
+                grid-template-columns: repeat(5, 1fr);
                 grid-gap: 20px;
             }
 
             .charts-section {
-                flex-direction: row; /* 横画面でのチャート配置 */
+                flex-direction: row;
                 justify-content: space-between;
             }
 
