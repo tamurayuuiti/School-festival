@@ -17,6 +17,7 @@
             margin: 0;
             padding: 20px;
             transition: background-color 0.3s, color 0.3s;
+            box-sizing: border-box;
         }
 
         .dark-mode {
@@ -31,6 +32,7 @@
             width: 100%;
             max-width: 900px;
             align-items: center;
+            box-sizing: border-box;
         }
 
         #counters {
@@ -41,6 +43,7 @@
             width: 100%;
             justify-items: center;
             justify-content: center;
+            box-sizing: border-box;
         }
 
         .counter-container {
@@ -48,10 +51,12 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            width: 90%; /* デフォルトのカウンター幅 */
+            width: 90%; /* 幅を90%に設定し、レスポンシブ対応 */
+            max-width: 400px; /* 最大幅を400pxに制限 */
+            box-sizing: border-box;
         }
 
         .dark-mode .counter-container {
@@ -94,8 +99,8 @@
         }
 
         button {
-            padding: 18px 32px;
-            font-size: 1.4em;
+            padding: 16px 24px;
+            font-size: 1.2em;
             border: none;
             border-radius: 8px;
             background-color: #007BFF;
@@ -139,6 +144,7 @@
             width: 100%;
             max-width: 85%;
             transition: background-color 0.3s, color 0.3s;
+            box-sizing: border-box;
         }
 
         .dark-mode .totals-container {
@@ -190,18 +196,7 @@
             margin: 10px 0;
             display: flex;
             justify-content: center;
-        }
-
-        @media (min-width: 320px) and (max-width: 480px) {
-            .counter-container {
-                width: 95%; /* 小さな画面に合わせてカウンター幅を調整 */
-            }
-        }
-
-        @media (min-width: 481px) and (max-width: 768px) {
-            .counter-container {
-                width: 90%; /* 中サイズの画面に合わせてカウンター幅を調整 */
-            }
+            box-sizing: border-box;
         }
 
         @media (min-width: 769px) {
@@ -221,11 +216,12 @@
             }
 
             .counter-container {
-                padding: 20px; /* 横画面では元のサイズを維持 */
+                padding: 20px;
+                max-width: 100%;
             }
 
             .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.2em; /* 横画面ではフォントサイズを元に戻す */
+                font-size: 1.2em;
             }
 
             button {
