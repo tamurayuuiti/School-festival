@@ -40,7 +40,7 @@
             padding: 20px;
             width: 100%;
             justify-items: center;
-            justify-content: center; /* 中央に配置 */
+            justify-content: center;
         }
 
         .counter-container {
@@ -48,10 +48,10 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px; /* 縦画面でサイズを拡大 */
+            padding: 20px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            max-width: 95%;
+            width: 90%; /* デフォルトのカウンター幅 */
         }
 
         .dark-mode .counter-container {
@@ -65,7 +65,7 @@
         }
 
         .counter-container h2 {
-            font-size: 1.6em; /* フォントサイズを大きく */
+            font-size: 1.6em;
             line-height: 1.5;
             font-weight: 600;
             margin: 0;
@@ -73,17 +73,17 @@
         }
 
         .count {
-            font-size: 2em; /* フォントサイズを大きく */
+            font-size: 2em;
             margin: 10px 0;
         }
 
         .remaining {
-            font-size: 1.2em; /* フォントサイズを大きく */
+            font-size: 1.2em;
             color: inherit;
         }
 
         .amount {
-            font-size: 1.4em; /* フォントサイズを大きく */
+            font-size: 1.4em;
         }
 
         .button-group {
@@ -94,8 +94,8 @@
         }
 
         button {
-            padding: 18px 32px; /* ボタンサイズを大きく */
-            font-size: 1.4em; /* ボタンのフォントサイズを大きく */
+            padding: 18px 32px;
+            font-size: 1.4em;
             border: none;
             border-radius: 8px;
             background-color: #007BFF;
@@ -190,6 +190,18 @@
             margin: 10px 0;
             display: flex;
             justify-content: center;
+        }
+
+        @media (min-width: 320px) and (max-width: 480px) {
+            .counter-container {
+                width: 95%; /* 小さな画面に合わせてカウンター幅を調整 */
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .counter-container {
+                width: 90%; /* 中サイズの画面に合わせてカウンター幅を調整 */
+            }
         }
 
         @media (min-width: 769px) {
