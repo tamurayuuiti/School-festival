@@ -38,7 +38,7 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr); /* Two columns by default */
             grid-gap: 10px;
             padding: 20px;
             width: 100%;
@@ -233,19 +233,9 @@
         @media (max-width: 768px) {
             /* Portrait mode adjustments */
             #counters {
-                grid-template-columns: repeat(1, 1fr); /* One column for portrait mode */
+                grid-template-columns: repeat(2, 1fr); /* Two columns for portrait mode */
                 grid-gap: 15px;
                 padding: 10px;
-            }
-
-            .counter-container {
-                width: calc(100% - 20px); /* Fit the screen size with some margin */
-                max-width: 100%;
-                margin: 0 auto;
-            }
-
-            .counters-section {
-                padding: 0 15px; /* Add space on both sides */
             }
         }
     </style>
