@@ -15,7 +15,8 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 10px; /* 画面端のスペースを確保 */
+            box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -31,16 +32,18 @@
             width: 100%;
             max-width: 900px;
             align-items: center;
+            box-sizing: border-box;
         }
 
         #counters {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            grid-gap: 15px;
+            grid-gap: 10px; /* カウンター間のスペースを調整 */
             padding: 20px;
             width: 100%;
+            max-width: 100%;
             justify-items: center;
-            justify-content: center;
+            box-sizing: border-box;
         }
 
         .counter-container {
@@ -48,10 +51,11 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            max-width: 95%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .dark-mode .counter-container {
@@ -65,15 +69,15 @@
         }
 
         .counter-container h2 {
-            font-size: 1.6em;
+            font-size: 1.5em;
             line-height: 1.5;
             font-weight: 600;
             margin: 0;
-            padding: 10px 0;
+            padding: 5px 0;
         }
 
         .count {
-            font-size: 2em;
+            font-size: 1.8em;
             margin: 10px 0;
         }
 
@@ -94,7 +98,7 @@
         }
 
         button {
-            padding: 18px 32px;
+            padding: 16px 28px;
             font-size: 1.4em;
             border: none;
             border-radius: 8px;
@@ -139,6 +143,7 @@
             width: 100%;
             max-width: 85%;
             transition: background-color 0.3s, color 0.3s;
+            box-sizing: border-box;
         }
 
         .dark-mode .totals-container {
@@ -190,6 +195,7 @@
             margin: 10px 0;
             display: flex;
             justify-content: center;
+            box-sizing: border-box;
         }
 
         @media (min-width: 769px) {
