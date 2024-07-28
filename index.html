@@ -12,7 +12,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
@@ -30,6 +30,7 @@
             gap: 20px;
             width: 100%;
             max-width: 900px;
+            align-items: center;
         }
 
         #counters {
@@ -38,15 +39,24 @@
             grid-gap: 20px;
             padding: 20px;
             width: 100%;
+            justify-items: center;
+            justify-content: center; /* 中央に配置 */
         }
 
         .counter-container {
-            background: white;
+            background: #fff;
+            color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 15px;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode .counter-container {
+            background: #333;
+            color: #ddd;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
         }
 
         .counter-container:hover {
@@ -97,6 +107,10 @@
             touch-action: manipulation;
         }
 
+        .dark-mode button {
+            background-color: #0056b3;
+        }
+
         button:hover {
             background-color: #0056b3;
         }
@@ -116,6 +130,7 @@
         .totals-container {
             margin-top: 20px;
             background-color: #ffffff;
+            color: #333;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -123,6 +138,11 @@
             width: 100%;
             max-width: 900px;
             transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode .totals-container {
+            background: #333;
+            color: #ddd;
         }
 
         .total-title {
@@ -174,7 +194,14 @@
 
         @media (max-width: 768px) {
             #counters {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 15px;
+                justify-content: center;
+            }
+
+            .counter-container {
+                max-width: 90%;
+                padding: 10px; /* 幅を狭く */
             }
 
             .count {
