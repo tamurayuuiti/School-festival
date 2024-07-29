@@ -49,16 +49,14 @@
         }
 
         #counters {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* デフォルトは2列 */
+            display: flex;
+            flex-wrap: wrap; /* 横向きでも折り返し */
             grid-gap: 1rem;
             padding: 1rem;
             width: 100%;
-            max-width: 100%;
-            justify-items: center;
+            justify-content: center;
             box-sizing: border-box;
             margin: 0 auto;
-            justify-content: center;
         }
 
         .counter-container {
@@ -69,9 +67,10 @@
             padding: 1.5rem;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            width: 100%;
+            width: calc(50% - 1rem); /* 縦向き時は2列 */
             max-width: 300px; /* カウンターの最大幅を設定 */
             box-sizing: border-box;
+            margin: 0.5rem;
         }
 
         .dark-mode .counter-container {
@@ -115,8 +114,8 @@
         }
 
         button {
-            width: 40px; /* カウンターサイズに対するボタンの比率を設定 */
-            height: 40px; /* 同上 */
+            width: calc(25% - 10px); /* カウンターサイズに対するボタンの比率を設定 */
+            height: 40px;
             font-size: 1.5rem; /* ボタンサイズに応じた記号のサイズ */
             border: none;
             border-radius: 8px;
@@ -221,14 +220,12 @@
         @media (min-width: 769px) {
             /* 横向きやPC用の調整 */
             #counters {
-                grid-template-columns: repeat(5, 1fr); /* 1行に5つ */
                 grid-gap: 1rem;
-                justify-items: center;
-                justify-content: center;
+                justify-content: space-between;
             }
 
             .counter-container {
-                padding: 1.5rem;
+                width: calc(20% - 1rem); /* 横向き時は1行に配置 */
             }
 
             .counter-container h2, .count, .remaining, .amount {
@@ -240,9 +237,9 @@
             }
 
             button {
-                width: 60px; /* 幅が広い場合はボタンサイズを調整 */
-                height: 60px;
-                font-size: 2rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
             }
 
             .charts-section {
@@ -259,15 +256,13 @@
         @media (max-width: 768px) {
             /* 縦向き用の調整 */
             #counters {
-                grid-template-columns: repeat(2, 1fr); /* 2列 */
                 grid-gap: 1rem;
                 padding: 0.5rem;
                 width: 100%;
             }
 
             .counter-container {
-                width: 100%;
-                padding: 1rem;
+                width: calc(50% - 1rem);
             }
 
             .charts-section {
