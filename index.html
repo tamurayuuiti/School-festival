@@ -50,7 +50,7 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr); /* デフォルトは2列 */
             grid-gap: 1rem;
             padding: 1rem;
             width: 100%;
@@ -70,7 +70,7 @@
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
             width: 100%;
-            max-width: 250px; /* カウンターの最大幅を設定 */
+            max-width: 300px; /* カウンターの最大幅を設定 */
             box-sizing: border-box;
         }
 
@@ -114,8 +114,8 @@
         }
 
         button {
-            padding: calc(0.7em + 1vw) calc(1.2em + 1vw); /* 幅に応じてpadding調整 */
-            font-size: calc(1.2rem + 0.5vw); /* 幅に応じてfont-size調整 */
+            padding: calc(0.8rem + 0.5vw) calc(1rem + 0.5vw); /* 幅に応じてpadding調整 */
+            font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -227,20 +227,19 @@
 
             .counter-container {
                 padding: 1.5rem;
-                max-width: 200px; /* 横向き用の最大幅 */
             }
 
             .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.3rem; /* フォントサイズ調整 */
+                font-size: 1.5rem; /* フォントサイズ調整 */
             }
 
             .count {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             button {
-                padding: calc(0.7em + 1vw) calc(1.2em + 1vw); /* 幅に応じてpadding調整 */
-                font-size: calc(1.2rem + 0.5vw); /* 幅に応じてfont-size調整 */
+                padding: calc(0.8rem + 0.5vw) calc(1rem + 0.5vw); /* 幅に応じてpadding調整 */
+                font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
             }
 
             .charts-section {
