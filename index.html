@@ -14,7 +14,6 @@
             --button-bg: #007BFF;
             --button-hover-bg: #0056b3;
             --box-shadow: rgba(0, 0, 0, 0.1);
-            --font-size-base: 1em;
         }
 
         body {
@@ -226,7 +225,8 @@
             }
 
             .counter-container {
-                padding: 1.5rem;
+                padding: 2rem;
+                max-width: 240px;
             }
 
             .counter-container h2, .count, .remaining, .amount {
@@ -238,8 +238,8 @@
             }
 
             button {
-                padding: 0.8rem 1.2rem;
-                font-size: 1rem;
+                padding: 1rem 1.5rem;
+                font-size: 1.2rem;
             }
 
             .charts-section {
@@ -265,6 +265,16 @@
             .counter-container {
                 width: 100%;
                 padding: 1rem;
+                max-width: none;
+            }
+
+            .counter-container h2, .count, .remaining, .amount {
+                font-size: 1.4rem;
+            }
+
+            button {
+                padding: 0.8rem 1.2rem;
+                font-size: 1rem;
             }
 
             .charts-section {
