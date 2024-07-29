@@ -100,6 +100,7 @@
         .remaining {
             font-size: 1.2rem;
             color: inherit;
+            white-space: nowrap; /* 残りカウントを1行で表示 */
         }
 
         .amount {
@@ -114,8 +115,9 @@
         }
 
         button {
-            padding: calc(0.8rem + 0.5vw) calc(1rem + 0.5vw); /* 幅に応じてpadding調整 */
-            font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
+            width: 40px; /* カウンターサイズに対するボタンの比率を設定 */
+            height: 40px; /* 同上 */
+            font-size: 1.5rem; /* ボタンサイズに応じた記号のサイズ */
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -238,8 +240,9 @@
             }
 
             button {
-                padding: calc(0.8rem + 0.5vw) calc(1rem + 0.5vw); /* 幅に応じてpadding調整 */
-                font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
+                width: 60px; /* 幅が広い場合はボタンサイズを調整 */
+                height: 60px;
+                font-size: 2rem;
             }
 
             .charts-section {
