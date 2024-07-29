@@ -5,31 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>リアルタイムカウンター</title>
     <style>
+        :root {
+            --primary-color: #007BFF;
+            --dark-background: #222;
+            --light-background: #f4f4f9;
+            --dark-text: #333;
+            --light-text: #ddd;
+            --button-bg: #007BFF;
+            --button-hover-bg: #0056b3;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --font-size-base: 1em;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
+            background-color: var(--light-background);
+            color: var(--dark-text);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            padding: 10px;
+            padding: 1rem;
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
         }
 
         .dark-mode {
-            background-color: #222;
-            color: #ddd;
+            background-color: var(--dark-background);
+            color: var(--light-text);
         }
 
         .counters-section {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            width: 100%;
+            width: 90%;
             max-width: 900px;
             align-items: center;
             box-sizing: border-box;
@@ -38,23 +50,23 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two columns by default */
-            grid-gap: 10px;
-            padding: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 15px;
+            padding: 1rem;
             width: 100%;
             max-width: 100%;
             justify-items: center;
             box-sizing: border-box;
             margin: 0 auto;
-            justify-content: center; /* Horizontally center the grid items */
+            justify-content: center;
         }
 
         .counter-container {
             background: #fff;
             color: #333;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 25px;
+            box-shadow: 0 4px 8px var(--box-shadow);
+            padding: 1.5rem;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
             width: 100%;
@@ -72,7 +84,7 @@
         }
 
         .counter-container h2 {
-            font-size: 1.5em;
+            font-size: 1.5rem;
             line-height: 1.5;
             font-weight: 600;
             margin: 0;
@@ -80,17 +92,17 @@
         }
 
         .count {
-            font-size: 1.8em;
+            font-size: 1.8rem;
             margin: 10px 0;
         }
 
         .remaining {
-            font-size: 1.2em;
+            font-size: 1.2rem;
             color: inherit;
         }
 
         .amount {
-            font-size: 1.4em;
+            font-size: 1.4rem;
         }
 
         .button-group {
@@ -101,11 +113,11 @@
         }
 
         button {
-            padding: 16px 28px;
-            font-size: 1.4em;
+            padding: 1rem 1.5rem;
+            font-size: 1.2rem;
             border: none;
             border-radius: 8px;
-            background-color: #007BFF;
+            background-color: var(--button-bg);
             color: white;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
@@ -116,11 +128,11 @@
         }
 
         .dark-mode button {
-            background-color: #0056b3;
+            background-color: var(--button-hover-bg);
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: var(--button-hover-bg);
         }
 
         button:active {
@@ -139,12 +151,12 @@
             margin-top: 20px;
             background-color: #ffffff;
             color: #333;
-            padding: 15px;
+            padding: 1rem;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px var(--box-shadow);
             text-align: center;
             width: 100%;
-            max-width: 85%;
+            max-width: 90%;
             transition: background-color 0.3s, color 0.3s;
             box-sizing: border-box;
             margin: 0 auto;
@@ -156,12 +168,12 @@
         }
 
         .total-title {
-            font-size: 1.5em;
+            font-size: 1.5rem;
             margin-bottom: 10px;
         }
 
         .total-value {
-            font-size: 1.3em;
+            font-size: 1.3rem;
         }
 
         .day-select {
@@ -172,24 +184,24 @@
 
         .day-select label {
             margin-right: 10px;
-            font-size: 1.2em;
+            font-size: 1.2rem;
         }
 
         .current-day {
-            font-size: 1.7em;
+            font-size: 1.7rem;
             margin-bottom: 20px;
             text-align: center;
             font-weight: bold;
-            color: #007BFF;
+            color: var(--primary-color);
         }
 
         .charts-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
+            width: 90%;
             max-width: 900px;
-            padding: 20px;
+            padding: 1rem;
             box-sizing: border-box;
             margin: 0 auto;
         }
@@ -213,24 +225,24 @@
             }
 
             .counter-container {
-                padding: 20px;
+                padding: 1.5rem;
             }
 
             .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.3em; /* Increase font size for landscape mode */
+                font-size: 1.3rem;
             }
 
             .count {
-                font-size: 2.2em; /* Larger count value */
+                font-size: 2.2rem;
             }
 
             button {
-                padding: 14px 24px;
-                font-size: 1.2em;
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
             }
 
             .charts-section {
-                flex-direction: row; /* Display charts side by side */
+                flex-direction: row;
                 justify-content: space-between;
             }
 
@@ -243,10 +255,10 @@
         @media (max-width: 768px) {
             /* Portrait mode adjustments */
             #counters {
-                grid-template-columns: repeat(2, 1fr); /* Two columns for portrait mode */
+                grid-template-columns: repeat(2, 1fr);
                 grid-gap: 15px;
                 padding: 10px;
-                width: 90%; /* Ensure consistent space on both sides */
+                width: 90%;
             }
 
             .counter-container {
@@ -255,7 +267,7 @@
             }
 
             .charts-section {
-                flex-direction: column; /* Display charts vertically */
+                flex-direction: column;
                 justify-content: center;
             }
 
@@ -352,7 +364,6 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Firebase configuration using the provided credentials
             const firebaseConfig = {
                 apiKey: "AIzaSyDfmjWjPl786cVBXzqlsiZsS4MUFbwrNNM",
                 authDomain: "school-festival-e4c8d.firebaseapp.com",
@@ -363,14 +374,10 @@
                 appId: "1:658868728855:web:8d7497c6838f5a42d21852"
             };
 
-            // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
-
-            // Initialize the counters
             const countersRef = database.ref('counters');
 
-            // Set up default values if they don't exist
             countersRef.once('value').then(snapshot => {
                 if (!snapshot.exists()) {
                     countersRef.set({
@@ -380,14 +387,12 @@
                 }
             });
 
-            // Variables to hold current day and counter values
             let currentDay = 'day1';
             const limits = {
                 day1: { plain: 30, choco: 100, strawberry: 100, matcha: 50, jdk: 20 },
                 day2: { plain: 30, choco: 150, strawberry: 150, matcha: 40, jdk: 30 }
             };
 
-            // Monetary values for each type
             const values = {
                 plain: 100,
                 choco: 100,
@@ -396,16 +401,12 @@
                 jdk: 200
             };
 
-            // Function to update UI with counter values
             function updateUI(counters) {
                 if (!counters) return;
                 for (let type in counters) {
-                    // Ensure counters[type] is a number
                     const count = parseInt(counters[type], 10) || 0;
-                    const remaining = limits[currentDay][type] - count; // 残りカウントを計算
+                    const remaining = limits[currentDay][type] - count;
                     document.getElementById(`${type}-count`).innerText = `${count}/${limits[currentDay][type]}`;
-
-                    // Display "Sold Out" in Japanese when remaining is zero
                     document.getElementById(`${type}-remaining`).innerText = remaining === 0 ? '売り切れ' : `残り: ${remaining} 個`;
                     document.getElementById(`${type}-amount`).innerText = `${count * values[type]} 円`;
                 }
@@ -413,7 +414,6 @@
                 updatePieCharts(counters);
             }
 
-            // Function to handle counter changes
             function changeCount(type, delta) {
                 const currentCountRef = countersRef.child(`${currentDay}/${type}`);
                 currentCountRef.transaction(count => {
@@ -425,7 +425,6 @@
                 });
             }
 
-            // Fetch and update the UI in real-time
             function updateRealTimeListener() {
                 countersRef.child(currentDay).on('value', snapshot => {
                     if (snapshot.exists()) {
@@ -434,10 +433,8 @@
                 });
             }
 
-            // Initialize real-time listener for day one by default
             updateRealTimeListener();
 
-            // Function to update total amounts
             function updateTotals(counters) {
                 const totalCount = Object.values(counters).reduce((sum, count) => sum + (parseInt(count, 10) || 0), 0);
                 const totalAmount = Object.entries(counters).reduce((sum, [key, count]) => sum + ((parseInt(count, 10) || 0) * values[key]), 0);
@@ -446,7 +443,6 @@
                 document.getElementById('total-amount').innerText = `総金額: ${totalAmount} 円`;
             }
 
-            // Function to create pie charts
             function createPieChart(canvasId, title, backgroundColors, unit) {
                 return new Chart(document.getElementById(canvasId).getContext('2d'), {
                     type: 'pie',
@@ -484,11 +480,9 @@
                 });
             }
 
-            // Initialize pie charts
             let countPieChart = createPieChart('count-pie-chart', '数量の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '個');
             let valuePieChart = createPieChart('value-pie-chart', '金額の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '円');
 
-            // Update pie charts
             function updatePieCharts(counters) {
                 const countData = [
                     parseInt(counters.plain, 10) || 0, 
@@ -512,25 +506,16 @@
                 valuePieChart.update();
             }
 
-            // Handle day change
             function confirmDayChange(selectedDay) {
-                // Remove the previous listener
                 countersRef.child(currentDay).off('value');
-
-                // Set the current day
                 currentDay = selectedDay === '1' ? 'day1' : 'day2';
                 document.getElementById('current-day').innerText = `現在の設定: ${currentDay === 'day1' ? '1日目' : '2日目'}`;
-
-                // Fetch and update the UI for the new day
                 countersRef.child(currentDay).once('value').then(snapshot => {
                     updateUI(snapshot.val() || {});
                 });
-
-                // Set up the real-time listener for the new day
                 updateRealTimeListener();
             }
 
-            // ダークモードを自動切替
             const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
             function applyTheme(e) {
                 if (e.matches) {
@@ -542,11 +527,9 @@
             mediaQuery.addEventListener('change', applyTheme);
             applyTheme(mediaQuery);
 
-            // Attach changeCount and confirmDayChange functions to window for button onclick access
             window.changeCount = changeCount;
             window.confirmDayChange = confirmDayChange;
 
-            // Check Firebase initialization and log
             console.log('Firebase initialized with project:', firebaseConfig.projectId);
         });
     </script>
