@@ -14,6 +14,7 @@
             --button-bg: #007BFF;
             --button-hover-bg: #0056b3;
             --box-shadow: rgba(0, 0, 0, 0.1);
+            --font-size-base: 1em;
         }
 
         body {
@@ -113,8 +114,8 @@
         }
 
         button {
-            padding: 0.8rem 1.2rem;
-            font-size: 1.2rem;
+            padding: calc(0.8rem + 0.5vw) calc(1rem + 0.5vw); /* 幅に応じてpadding調整 */
+            font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -225,8 +226,7 @@
             }
 
             .counter-container {
-                padding: 2rem;
-                max-width: 240px;
+                padding: 1.5rem;
             }
 
             .counter-container h2, .count, .remaining, .amount {
@@ -238,8 +238,8 @@
             }
 
             button {
-                padding: 1rem 1.5rem;
-                font-size: 1.2rem;
+                padding: calc(0.8rem + 0.5vw) calc(1rem + 0.5vw); /* 幅に応じてpadding調整 */
+                font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
             }
 
             .charts-section {
@@ -265,16 +265,6 @@
             .counter-container {
                 width: 100%;
                 padding: 1rem;
-                max-width: none;
-            }
-
-            .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.4rem;
-            }
-
-            button {
-                padding: 0.8rem 1.2rem;
-                font-size: 1rem;
             }
 
             .charts-section {
