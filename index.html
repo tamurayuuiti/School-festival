@@ -27,7 +27,7 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            padding: 2vw; /* ビューポート幅に基づいてスペースを設定 */
+            padding: 1rem;
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
         }
@@ -40,9 +40,9 @@
         .counters-section {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 1.5rem;
             width: 100%;
-            max-width: 900px;
+            max-width: 1200px;
             align-items: center;
             box-sizing: border-box;
             margin: 0 auto;
@@ -50,8 +50,9 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-gap: 2vw; /* 一貫したスペースを確保 */
+            grid-template-columns: repeat(2, 1fr); /* デフォルトは2列 */
+            grid-gap: 1rem;
+            padding: 1rem;
             width: 100%;
             max-width: 100%;
             justify-items: center;
@@ -65,10 +66,11 @@
             color: #333;
             border-radius: 10px;
             box-shadow: 0 4px 8px var(--box-shadow);
-            padding: 2vw; /* コンテナサイズに比例したパディング */
+            padding: 1.5rem;
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
             width: 100%;
+            max-width: 300px; /* カウンターの最大幅を設定 */
             box-sizing: border-box;
         }
 
@@ -107,12 +109,12 @@
         .button-group {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
+            gap: 1rem;
+            margin: 1rem 0;
         }
 
         button {
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             font-size: 1.2rem;
             border: none;
             border-radius: 8px;
@@ -147,7 +149,7 @@
         }
 
         .totals-container {
-            margin-top: 20px;
+            margin-top: 1.5rem;
             background-color: #ffffff;
             color: #333;
             padding: 1rem;
@@ -176,7 +178,7 @@
         }
 
         .day-select {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
             text-align: center;
             width: 100%;
         }
@@ -188,7 +190,7 @@
 
         .current-day {
             font-size: 1.7rem;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
             text-align: center;
             font-weight: bold;
             color: var(--primary-color);
@@ -198,8 +200,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 90%;
-            max-width: 900px;
+            width: 100%;
+            max-width: 1200px;
             padding: 1rem;
             box-sizing: border-box;
             margin: 0 auto;
@@ -215,33 +217,33 @@
         }
 
         @media (min-width: 769px) {
-            /* Landscape mode adjustments */
+            /* 横向きやPC用の調整 */
             #counters {
-                grid-template-columns: repeat(3, 1fr); /* 3列でグリッドを形成 */
-                grid-gap: 2vw;
+                grid-template-columns: repeat(5, 1fr); /* 1行に5つ */
+                grid-gap: 1rem;
                 justify-items: center;
                 justify-content: center;
             }
 
             .counter-container {
-                padding: 2vw;
+                padding: 1.5rem;
             }
 
             .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.5rem; /* コンテナサイズに比例してフォントサイズを調整 */
+                font-size: 1.5rem; /* フォントサイズ調整 */
             }
 
             .count {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             button {
-                padding: 1rem 2rem;
+                padding: 0.8rem 1.2rem;
                 font-size: 1rem;
             }
 
             .charts-section {
-                flex-direction: row;
+                flex-direction: row; /* グラフを横に配置 */
                 justify-content: space-between;
             }
 
@@ -252,17 +254,17 @@
         }
 
         @media (max-width: 768px) {
-            /* Portrait mode adjustments */
+            /* 縦向き用の調整 */
             #counters {
-                grid-template-columns: 1fr; /* 1列で表示 */
-                grid-gap: 2vw;
-                padding: 2vw;
+                grid-template-columns: repeat(2, 1fr); /* 2列 */
+                grid-gap: 1rem;
+                padding: 0.5rem;
                 width: 100%;
             }
 
             .counter-container {
                 width: 100%;
-                padding: 2vw;
+                padding: 1rem;
             }
 
             .charts-section {
