@@ -129,6 +129,8 @@
             align-items: center;
             justify-content: center;
             touch-action: manipulation;
+            line-height: 1; /* 記号が中央に表示されるようにする */
+            text-align: center; /* 記号が中央に表示されるようにする */
         }
 
         .dark-mode button {
@@ -141,6 +143,11 @@
 
         button:active {
             transform: scale(0.95);
+        }
+
+        .icon-plus::before,
+        .icon-minus::before {
+            font-size: calc(2rem + 1vw); /* ボタンサイズに比例したフォントサイズ */
         }
 
         .icon-plus::before {
@@ -246,7 +253,7 @@
 
             .charts-section {
                 flex-direction: row; /* グラフを横に配置 */
-                justify-content: space-between;
+                justify-content: center; /* グラフを中央に配置 */
             }
 
             .chart-container {
@@ -368,13 +375,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const firebaseConfig = {
-                apiKey: "AIzaSyDfmjWjPl786cVBXzqlsiZsS4MUFbwrNNM",
-                authDomain: "school-festival-e4c8d.firebaseapp.com",
-                databaseURL: "https://school-festival-e4c8d-default-rtdb.firebaseio.com",
-                projectId: "school-festival-e4c8d",
-                storageBucket: "school-festival-e4c8d.appspot.com",
-                messagingSenderId: "658868728855",
-                appId: "1:658868728855:web:8d7497c6838f5a42d21852"
+                apiKey: "API_KEY",
+                authDomain: "PROJECT_ID.firebaseapp.com",
+                databaseURL: "https://PROJECT_ID.firebaseio.com",
+                projectId: "PROJECT_ID",
+                storageBucket: "PROJECT_ID.appspot.com",
+                messagingSenderId: "SENDER_ID",
+                appId: "APP_ID"
             };
 
             firebase.initializeApp(firebaseConfig);
