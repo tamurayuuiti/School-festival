@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"> <!-- viewport-fit=coverを追加 -->
     <title>リアルタイムカウンター</title>
     <style>
         :root {
@@ -30,6 +30,7 @@
             padding: 1rem;
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
+            padding-top: env(safe-area-inset-top); /* ダイナミックアイランドに対応 */
         }
 
         .dark-mode {
@@ -74,6 +75,7 @@
             height: 100%; /* カウンターの高さをボタンの高さに対応させる */
             box-sizing: border-box;
             max-height: 100vh; /* ダイナミックアイランド対応 */
+            padding-top: env(safe-area-inset-top); /* ダイナミックアイランドに対応 */
         }
 
         .dark-mode .counter-container {
@@ -104,7 +106,8 @@
             color: inherit;
             white-space: nowrap; /* テキストが折り返されないようにする */
             width: 100%; /* 幅を固定 */
-            text-align: right; /* 右寄せ */
+            text-align: center; /* 中央寄せ */
+            display: inline-block;
         }
 
         .amount {
