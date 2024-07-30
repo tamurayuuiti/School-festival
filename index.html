@@ -129,8 +129,6 @@
             align-items: center;
             justify-content: center;
             touch-action: manipulation;
-            line-height: 1; /* 記号が中央に表示されるようにする */
-            text-align: center; /* 記号が中央に表示されるようにする */
         }
 
         .dark-mode button {
@@ -143,11 +141,6 @@
 
         button:active {
             transform: scale(0.95);
-        }
-
-        .icon-plus::before,
-        .icon-minus::before {
-            font-size: calc(2rem + 1vw); /* ボタンサイズに比例したフォントサイズ */
         }
 
         .icon-plus::before {
@@ -253,7 +246,7 @@
 
             .charts-section {
                 flex-direction: row; /* グラフを横に配置 */
-                justify-content: center; /* グラフを中央に配置 */
+                justify-content: space-between;
             }
 
             .chart-container {
