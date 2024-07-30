@@ -71,7 +71,7 @@
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
             width: 100%;
             max-width: 300px; /* カウンターの最大幅を設定 */
-            height: 100%; /* カウンターの高さをボタンの高さに対応させる */
+            height: 400px; /* カウンターの高さを固定 */
             box-sizing: border-box;
         }
 
@@ -116,9 +116,9 @@
         }
 
         button {
-            width: 50%; /* ボタンの幅をカウンターコンテナの幅の50%に設定 */
+            width: 45%; /* ボタンの幅をカウンターコンテナの幅の45%に設定 */
             aspect-ratio: 1 / 1; /* ボタンのアスペクト比を1:1に設定 */
-            font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
+            font-size: calc(1rem + 1vw); /* ボタンのサイズに比例したfont-size */
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -145,10 +145,12 @@
 
         .icon-plus::before {
             content: "+";
+            font-size: inherit; /* ボタンのサイズに比例 */
         }
 
         .icon-minus::before {
             content: "-";
+            font-size: inherit; /* ボタンのサイズに比例 */
         }
 
         .totals-container {
@@ -213,7 +215,7 @@
         .chart-container {
             flex: 1;
             max-width: 100%;
-            margin: 10px 5px; /* 円グラフの間隔を調整 */
+            margin: 10px 2px; /* 円グラフの間隔を調整 */
             display: flex;
             justify-content: center;
             box-sizing: border-box;
@@ -241,17 +243,17 @@
             }
 
             button {
-                width: 40%; /* PC用の画面ではもう少し小さくする */
+                width: 35%; /* PC用の画面ではもう少し小さくする */
             }
 
             .charts-section {
                 flex-direction: row; /* グラフを横に配置 */
-                justify-content: space-between;
+                justify-content: center; /* グラフを中央寄せにする */
             }
 
             .chart-container {
                 max-width: 400px;
-                margin: 0 5px; /* 円グラフの間隔を調整 */
+                margin: 0 2px; /* 円グラフの間隔を調整 */
             }
         }
 
@@ -521,7 +523,7 @@
 
             const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
             function applyTheme(e) {
-                if ( e.matches) {
+                if (e.matches) {
                     document.body.classList.add('dark-mode');
                 } else {
                     document.body.classList.remove('dark-mode');
