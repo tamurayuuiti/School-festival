@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>リアルタイムカウンター20240729仮</title>
+    <title>リアルタイムカウンター</title>
     <style>
         :root {
             --primary-color: #007BFF;
@@ -72,6 +72,7 @@
             width: 100%;
             max-width: 300px; /* カウンターの最大幅を設定 */
             box-sizing: border-box;
+            overflow: hidden; /* テキストがフレームを超えないようにする */
         }
 
         .dark-mode .counter-container {
@@ -90,16 +91,21 @@
             font-weight: 600;
             margin: 0;
             padding: 5px 0;
+            word-wrap: break-word; /* テキストがフレームを超えないようにする */
         }
 
         .count {
             font-size: 1.8rem;
             margin: 10px 0;
+            word-wrap: break-word; /* テキストがフレームを超えないようにする */
         }
 
         .remaining {
             font-size: 1.2rem;
             color: inherit;
+            white-space: nowrap; /* 残りカウントを1行で表示 */
+            overflow: hidden;
+            text-overflow: ellipsis; /* テキストがフレームを超えないようにする */
         }
 
         .amount {
@@ -109,13 +115,14 @@
         .button-group {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.5rem;
             margin: 1rem 0;
         }
 
         button {
-            padding: calc(0.8rem + 0.5vw) calc(1rem + 0.5vw); /* 幅に応じてpadding調整 */
-            font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
+            width: 45px; /* 縦向きでのボタンサイズ */
+            height: 45px; /* 縦向きでのボタンサイズ */
+            font-size: 1.5rem; /* ボタンサイズに応じた記号のサイズ */
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -238,8 +245,9 @@
             }
 
             button {
-                padding: calc(0.8rem + 0.5vw) calc(1rem + 0.5vw); /* 幅に応じてpadding調整 */
-                font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
+                width: 60px; /* 横向きやPC用のボタンサイズ */
+                height: 60px;
+                font-size: 2rem;
             }
 
             .charts-section {
@@ -253,8 +261,26 @@
             }
         }
 
-        @media (max-width: 768px) {
-            /* 縦向き用の調整 */
+        @media (max-width: 768px) and (orientation: landscape) {
+            /* スマートフォンの横向き用の調整 */
+            #counters {
+                grid-template-columns: repeat(5, minmax(0, 1fr)); /* 幅に応じた調整 */
+                grid-gap: 0.5rem;
+                padding: 0.5rem;
+                margin-top: 2rem; /* ダイナミックアイランドを避けるための余白 */
+            }
+
+            .counter-container {
+                padding: 1rem;
+            }
+
+            .button-group {
+                gap: 0.3rem; /* 横向きでのボタングループの間隔調整 */
+            }
+        }
+
+        @media (max-width: 768px) and (orientation: portrait) {
+            /* スマートフォンの縦向き用の調整 */
             #counters {
                 grid-template-columns: repeat(2, 1fr); /* 2列 */
                 grid-gap: 1rem;
@@ -267,14 +293,8 @@
                 padding: 1rem;
             }
 
-            .charts-section {
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            .chart-container {
-                max-width: 100%;
-                margin: 10px 0;
+            .button-group {
+                gap: 0.5rem; /* 縦向きでのボタングループの間隔調整 */
             }
         }
     </style>
