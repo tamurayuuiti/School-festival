@@ -71,6 +71,7 @@
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
             width: 100%;
             max-width: 300px; /* カウンターの最大幅を設定 */
+            height: 100%; /* カウンターの高さをボタンの高さに対応させる */
             box-sizing: border-box;
         }
 
@@ -116,7 +117,7 @@
 
         button {
             width: 50%; /* ボタンの幅をカウンターコンテナの幅の50%に設定 */
-            padding: calc(0.8rem + 0.5vw) calc(1rem + 0.5vw); /* 幅に応じてpadding調整 */
+            aspect-ratio: 1 / 1; /* ボタンのアスペクト比を1:1に設定 */
             font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
             border: none;
             border-radius: 8px;
@@ -212,7 +213,7 @@
         .chart-container {
             flex: 1;
             max-width: 100%;
-            margin: 10px 0;
+            margin: 10px 5px; /* 円グラフの間隔を調整 */
             display: flex;
             justify-content: center;
             box-sizing: border-box;
@@ -241,8 +242,6 @@
 
             button {
                 width: 40%; /* PC用の画面ではもう少し小さくする */
-                padding: calc(0.8rem + 0.8vw);
-                font-size: calc(1rem + 0.3vw);
             }
 
             .charts-section {
@@ -252,7 +251,7 @@
 
             .chart-container {
                 max-width: 400px;
-                margin: 0 10px;
+                margin: 0 5px; /* 円グラフの間隔を調整 */
             }
         }
 
@@ -522,7 +521,7 @@
 
             const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
             function applyTheme(e) {
-                if (e.matches) {
+                if ( e.matches) {
                     document.body.classList.add('dark-mode');
                 } else {
                     document.body.classList.remove('dark-mode');
