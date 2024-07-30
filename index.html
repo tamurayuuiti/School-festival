@@ -47,6 +47,8 @@
             align-items: center;
             box-sizing: border-box;
             margin: 0 auto;
+            padding-left: 1rem; /* 左右に余白を持たせる */
+            padding-right: 1rem; /* 左右に余白を持たせる */
         }
 
         #counters {
@@ -102,7 +104,7 @@
         }
 
         .remaining {
-            font-size: 1.2rem;
+            font-size: 1.4rem; /* フォントサイズを大きくする */
             color: inherit;
             white-space: nowrap; /* テキストが折り返されないようにする */
             width: 100%; /* 幅を固定 */
@@ -228,6 +230,11 @@
 
         @media (min-width: 769px) {
             /* 横向きやPC用の調整 */
+            .counters-section {
+                padding-left: 2rem; /* 左右にさらに余白を持たせる */
+                padding-right: 2rem; /* 左右にさらに余白を持たせる */
+            }
+
             #counters {
                 grid-template-columns: repeat(5, 1fr); /* 1行に5つ */
                 grid-gap: 1rem;
