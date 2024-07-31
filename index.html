@@ -258,12 +258,14 @@
 
         @media (max-width: 768px) {
             /* 縦向き用の調整 */
-            #counters {
-                grid-template-columns: repeat(3, 1fr); /* 3列 */
+            .portrait #counters {
+                grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
+                grid-template-rows: repeat(3, 1fr); /* 3行 */
+            }
+
+            .landscape #counters {
+                grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
                 grid-template-rows: repeat(2, 1fr); /* 2行 */
-                grid-gap: 1rem;
-                padding: 0.5rem;
-                width: 100%;
             }
 
             .counter-container {
@@ -301,7 +303,7 @@
     </div>
     <div class="current-day" id="current-day">現在の設定: 1日目</div>
     <div class="counters-section">
-        <div id="counters">
+        <div id="counters" class="landscape"> <!-- 初期クラスを設定 -->
             <div class="counter-container" id="plain-counter" style="border-top: 5px solid #007BFF;">
                 <h2>プレーン</h2>
                 <div class="count" id="plain-count">0/30</div>
@@ -531,6 +533,25 @@
             }
             mediaQuery.addEventListener('change', applyTheme);
             applyTheme(mediaQuery);
+
+            // 画面の向きを監視してCSSクラスを変更
+            function updateOrientation() {
+                const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+                const countersElement = document.getElementById('counters');
+                if (isPortrait) {
+                    countersElement.classList.remove('landscape');
+                    countersElement.classList.add('portrait');
+                } else {
+                    countersElement.classList.remove('portrait');
+                    countersElement.classList.add('landscape');
+                }
+            }
+
+            window.addEventListener('orientationchange', updateOrientation);
+            window.addEventListener('resize', updateOrientation);
+
+            // 初期表示時の向きを設定
+            updateOrientation();
 
             window.changeCount = changeCount;
             window.confirmDayChange = confirmDayChange;
