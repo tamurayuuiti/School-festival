@@ -272,21 +272,16 @@
         @media (orientation: landscape) and (max-width: 768px) {
             /* ランドスケープモードのときにスペースを追加 */
             .counters-section {
-                flex-direction: row; /* カウンターを横に並べる */
-                justify-content: center; /* 中央揃えにする */
-                align-items: center; /* 中央揃えにする */
-                height: 100vh; /* 高さを100vhに設定 */
                 padding-left: 2rem; /* 左右に余白を追加 */
                 padding-right: 2rem; /* 左右に余白を追加 */
+                margin-top: env(safe-area-inset-top); /* ダイナミックアイランド対応 */
             }
 
             #counters {
-                grid-template-columns: repeat(5, 1fr); /* 1行に5つ */
+                grid-template-columns: repeat(2, 1fr); /* 2列 */
                 grid-gap: 1rem;
                 padding: 0.5rem;
                 width: 100%;
-                justify-content: center; /* 中央揃えにする */
-                align-items: center; /* 中央揃えにする */
             }
 
             .counter-container {
