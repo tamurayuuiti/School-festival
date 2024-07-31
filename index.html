@@ -269,7 +269,37 @@
             }
         }
 
-        @media (max-width: 768px) {
+        @media (orientation: landscape) and (max-width: 768px) {
+            /* ランドスケープモードのときにスペースを追加 */
+            .counters-section {
+                padding-left: 2rem; /* 左右に余白を追加 */
+                padding-right: 2rem; /* 左右に余白を追加 */
+            }
+
+            #counters {
+                grid-template-columns: repeat(2, 1fr); /* 2列 */
+                grid-gap: 1rem;
+                padding: 0.5rem;
+                width: 100%;
+            }
+
+            .counter-container {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .charts-section {
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .chart-container {
+                max-width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        @media (max-width: 768px) and (orientation: portrait) {
             /* 縦向き用の調整 */
             #counters {
                 grid-template-columns: repeat(2, 1fr); /* 2列 */
