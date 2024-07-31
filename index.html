@@ -122,7 +122,7 @@
             aspect-ratio: 1 / 1; /* ボタンのアスペクト比を1:1に設定 */
             max-width: 100px; /* ボタンの最大幅を設定 */
             max-height: 100px; /* ボタンの最大高さを設定 */
-            font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
+            font-size: calc(1.2rem + 0.2vw); /* 幅に応じてfont-size調整 */
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -148,7 +148,7 @@
         }
 
         .icon-plus::before, .icon-minus::before {
-            font-size: calc(1rem + 0.2vw); /* ボタンのサイズに応じてアイコンのフォントサイズを調整 */
+            font-size: calc(1.2rem + 0.2vw); /* ボタンのサイズに応じてアイコンのフォントサイズを調整 */
             content: attr(data-icon); /* アイコンの内容を設定 */
         }
 
@@ -259,7 +259,8 @@
         @media (max-width: 768px) {
             /* 縦向き用の調整 */
             #counters {
-                grid-template-columns: repeat(2, 1fr); /* 2列 */
+                grid-template-columns: repeat(3, 1fr); /* 3列 */
+                grid-template-rows: repeat(2, 1fr); /* 2行 */
                 grid-gap: 1rem;
                 padding: 0.5rem;
                 width: 100%;
