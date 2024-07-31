@@ -54,7 +54,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr); /* デフォルトは2列 */
             grid-gap: 1rem;
-            padding: 1rem 1.5rem; /* 横向きモードでの配置を内側に移動 */
+            padding: 1rem;
             width: 100%;
             max-width: 100%;
             justify-items: center;
@@ -74,7 +74,7 @@
             width: 100%;
             max-width: 300px; /* カウンターの最大幅を設定 */
             height: 100%; /* カウンターの高さをボタンの高さに対応させる */
-            box-sizing: border-box;
+            box-sizing: border-box; /* パディングとボーダーを含めたボックスサイズ */
         }
 
         .dark-mode .counter-container {
@@ -149,7 +149,7 @@
 
         .icon-plus::before, .icon-minus::before {
             content: attr(data-icon);
-            font-size: calc(2rem + 0.2vw); /* ボタンのサイズに応じてアイコンのフォントサイズを調整 */
+            font-size: calc(1rem + 0.2vw); /* ボタンのサイズに応じてアイコンのフォントサイズを調整 */
         }
 
         .totals-container {
@@ -261,7 +261,7 @@
             #counters {
                 grid-template-columns: repeat(2, 1fr); /* 2列 */
                 grid-gap: 1rem;
-                padding: 0.5rem 1rem; /* 横向きモードでの配置を内側に移動 */
+                padding: 0.5rem;
                 width: 100%;
             }
 
