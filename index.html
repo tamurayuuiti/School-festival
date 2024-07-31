@@ -74,7 +74,7 @@
             width: 100%;
             max-width: 300px; /* カウンターの最大幅を設定 */
             height: 100%; /* カウンターの高さをボタンの高さに対応させる */
-            box-sizing: border-box; /* パディングとボーダーを含めたボックスサイズ */
+            box-sizing: border-box;
         }
 
         .dark-mode .counter-container {
@@ -148,8 +148,8 @@
         }
 
         .icon-plus::before, .icon-minus::before {
-            content: attr(data-icon);
             font-size: calc(1rem + 0.2vw); /* ボタンのサイズに応じてアイコンのフォントサイズを調整 */
+            content: attr(data-icon); /* アイコンの内容を設定 */
         }
 
         .totals-container {
