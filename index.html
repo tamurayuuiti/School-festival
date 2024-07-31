@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"> <!-- viewport-fit=coverを追加 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>リアルタイムカウンター</title>
     <style>
         :root {
@@ -30,7 +30,6 @@
             padding: 1rem;
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
-            padding-top: env(safe-area-inset-top); /* ダイナミックアイランドに対応 */
         }
 
         .dark-mode {
@@ -47,8 +46,6 @@
             align-items: center;
             box-sizing: border-box;
             margin: 0 auto;
-            padding-left: 1rem; /* 左右に余白を持たせる */
-            padding-right: 1rem; /* 左右に余白を持たせる */
         }
 
         #counters {
@@ -76,8 +73,6 @@
             max-width: 300px; /* カウンターの最大幅を設定 */
             height: 100%; /* カウンターの高さをボタンの高さに対応させる */
             box-sizing: border-box;
-            max-height: 100vh; /* ダイナミックアイランド対応 */
-            padding-top: env(safe-area-inset-top); /* ダイナミックアイランドに対応 */
         }
 
         .dark-mode .counter-container {
@@ -104,12 +99,9 @@
         }
 
         .remaining {
-            font-size: 1.4rem; /* フォントサイズを大きくする */
+            font-size: 1.2rem;
             color: inherit;
             white-space: nowrap; /* テキストが折り返されないようにする */
-            width: 100%; /* 幅を固定 */
-            text-align: center; /* 中央寄せ */
-            display: inline-block;
         }
 
         .amount {
@@ -126,7 +118,7 @@
         button {
             width: 50%; /* ボタンの幅をカウンターコンテナの幅の50%に設定 */
             aspect-ratio: 1 / 1; /* ボタンのアスペクト比を1:1に設定 */
-            font-size: calc(2rem + 0.5vw); /* 幅に応じてfont-size調整 */
+            font-size: calc(1rem + 0.2vw); /* 幅に応じてfont-size調整 */
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -137,7 +129,6 @@
             align-items: center;
             justify-content: center;
             touch-action: manipulation;
-            max-width: 80px; /* ボタンの最大幅を設定 */
         }
 
         .dark-mode button {
@@ -230,11 +221,6 @@
 
         @media (min-width: 769px) {
             /* 横向きやPC用の調整 */
-            .counters-section {
-                padding-left: 2rem; /* 左右にさらに余白を持たせる */
-                padding-right: 2rem; /* 左右にさらに余白を持たせる */
-            }
-
             #counters {
                 grid-template-columns: repeat(5, 1fr); /* 1行に5つ */
                 grid-gap: 1rem;
@@ -260,7 +246,7 @@
 
             .charts-section {
                 flex-direction: row; /* グラフを横に配置 */
-                justify-content: center; /* 中央寄せ */
+                justify-content: space-between;
             }
 
             .chart-container {
@@ -269,38 +255,7 @@
             }
         }
 
-        @media (orientation: landscape) and (max-width: 768px) {
-            /* ランドスケープモードのときにスペースを追加 */
-            .counters-section {
-                padding-left: 2rem !important; /* 左右に余白を追加 */
-                padding-right: 2rem !important; /* 左右に余白を追加 */
-                margin-top: env(safe-area-inset-top) !important; /* ダイナミックアイランド対応 */
-            }
-
-            #counters {
-                grid-template-columns: repeat(2, 1fr); /* 2列 */
-                grid-gap: 1rem;
-                padding: 0.5rem;
-                width: 100%;
-            }
-
-            .counter-container {
-                width: 100%;
-                padding: 1rem;
-            }
-
-            .charts-section {
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            .chart-container {
-                max-width: 100%;
-                margin: 10px 0;
-            }
-        }
-
-        @media (max-width: 768px) and (orientation: portrait) {
+        @media (max-width: 768px) {
             /* 縦向き用の調整 */
             #counters {
                 grid-template-columns: repeat(2, 1fr); /* 2列 */
