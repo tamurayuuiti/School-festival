@@ -257,13 +257,13 @@
         }
 
         @media (max-width: 768px) {
-            /* 縦向き用の調整 */
-            .portrait #counters {
+            /* スマートフォン用の調整 */
+            .smartphone.portrait #counters {
                 grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
                 grid-template-rows: repeat(3, 1fr); /* 3行 */
             }
 
-            .landscape #counters {
+            .smartphone.landscape #counters {
                 grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
                 grid-template-rows: repeat(2, 1fr); /* 2行 */
             }
@@ -303,7 +303,7 @@
     </div>
     <div class="current-day" id="current-day">現在の設定: 1日目</div>
     <div class="counters-section">
-        <div id="counters" class="landscape"> <!-- 初期クラスを設定 -->
+        <div id="counters">
             <div class="counter-container" id="plain-counter" style="border-top: 5px solid #007BFF;">
                 <h2>プレーン</h2>
                 <div class="count" id="plain-count">0/30</div>
@@ -534,24 +534,32 @@
             mediaQuery.addEventListener('change', applyTheme);
             applyTheme(mediaQuery);
 
-            // 画面の向きを監視してCSSクラスを変更
-            function updateOrientation() {
+            // デバイスの種類と向きを判定してCSSクラスを適用
+            function updateDeviceTypeAndOrientation() {
+                const isSmartphone = window.matchMedia("(max-width: 768px)").matches;
                 const isPortrait = window.matchMedia("(orientation: portrait)").matches;
                 const countersElement = document.getElementById('counters');
-                if (isPortrait) {
-                    countersElement.classList.remove('landscape');
-                    countersElement.classList.add('portrait');
+                if (isSmartphone) {
+                    document.body.classList.add('smartphone');
+                    if (isPortrait) {
+                        countersElement.classList.remove('landscape');
+                        countersElement.classList.add('portrait');
+                    } else {
+                        countersElement.classList.remove('portrait');
+                        countersElement.classList.add('landscape');
+                    }
                 } else {
+                    document.body.classList.remove('smartphone');
                     countersElement.classList.remove('portrait');
-                    countersElement.classList.add('landscape');
+                    countersElement.classList.remove('landscape');
                 }
             }
 
-            window.addEventListener('orientationchange', updateOrientation);
-            window.addEventListener('resize', updateOrientation);
+            window.addEventListener('orientationchange', updateDeviceTypeAndOrientation);
+            window.addEventListener('resize', updateDeviceTypeAndOrientation);
 
-            // 初期表示時の向きを設定
-            updateOrientation();
+            // 初期表示時のデバイス種類と向きを設定
+            updateDeviceTypeAndOrientation();
 
             window.changeCount = changeCount;
             window.confirmDayChange = confirmDayChange;
