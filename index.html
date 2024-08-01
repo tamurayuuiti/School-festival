@@ -268,6 +268,11 @@
                 grid-template-rows: repeat(2, 1fr); /* 2行 */
             }
 
+            .landscape.mobile #counters {
+                grid-template-columns: repeat(3, 1fr); /* 横向きスマホの場合は3列 */
+                grid-template-rows: repeat(2, 1fr); /* 2行 */
+            }
+
             .counter-container {
                 width: 100%;
                 padding: 1rem;
@@ -561,6 +566,9 @@
                 } else {
                     countersElement.classList.remove('portrait');
                     countersElement.classList.add('landscape');
+                    if (deviceType === 'mobile') {
+                        countersElement.classList.add('landscape');
+                    }
                 }
             }
 
