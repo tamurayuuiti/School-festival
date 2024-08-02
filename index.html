@@ -30,8 +30,8 @@
             padding: 1rem;
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
-            padding-top: env(safe-area-inset-top); /* iPhoneなどでノッチを避ける */
-            padding-bottom: env(safe-area-inset-bottom); /* iPhoneなどでノッチを避ける */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         .dark-mode {
@@ -52,7 +52,7 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* デフォルトは2列 */
+            grid-template-columns: repeat(2, 1fr);
             grid-gap: 1rem;
             padding: 1rem;
             width: 100%;
@@ -72,8 +72,8 @@
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
             width: 100%;
-            max-width: 300px; /* カウンターの最大幅を設定 */
-            height: 100%; /* カウンターの高さをボタンの高さに対応させる */
+            max-width: 300px;
+            height: 100%;
             box-sizing: border-box;
         }
 
@@ -101,11 +101,9 @@
         }
 
         .remaining {
-            font-size: 1.2rem;
+            font-size: 1rem; /* サイズを小さく変更 */
             color: inherit;
-            white-space: nowrap; /* テキストが折り返されないようにする */
-            width: 50%; /* 表示幅をカウンターの幅より小さく設定 */
-            margin: 0 auto; /* 中央揃え */
+            white-space: nowrap;
         }
 
         .amount {
@@ -120,11 +118,11 @@
         }
 
         button {
-            width: 50%; /* ボタンの幅をカウンターコンテナの幅の50%に設定 */
-            aspect-ratio: 1 / 1; /* ボタンのアスペクト比を1:1に設定 */
-            max-width: 100px; /* ボタンの最大幅を設定 */
-            max-height: 100px; /* ボタンの最大高さを設定 */
-            font-size: calc(1.2rem + 0.2vw); /* 幅に応じてfont-size調整 */
+            width: 50%;
+            aspect-ratio: 1 / 1;
+            max-width: 100px;
+            max-height: 100px;
+            font-size: calc(1.2rem + 0.2vw);
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -150,8 +148,8 @@
         }
 
         .icon-plus::before, .icon-minus::before {
-            font-size: calc(1.2rem + 0.2vw); /* ボタンのサイズに応じてアイコンのフォントサイズを調整 */
-            content: attr(data-icon); /* アイコンの内容を設定 */
+            font-size: calc(1.2rem + 0.2vw);
+            content: attr(data-icon);
         }
 
         .totals-container {
@@ -216,16 +214,15 @@
         .chart-container {
             flex: 1;
             max-width: 100%;
-            margin: 10px 5px; /* 円グラフの間隔を調整 */
+            margin: 10px 5px;
             display: flex;
             justify-content: center;
             box-sizing: border-box;
         }
 
         @media (min-width: 769px) {
-            /* 横向きやPC用の調整 */
             #counters {
-                grid-template-columns: repeat(5, 1fr); /* 1行に5つ */
+                grid-template-columns: repeat(5, 1fr);
                 grid-gap: 1rem;
                 justify-items: center;
                 justify-content: center;
@@ -236,7 +233,7 @@
             }
 
             .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.5rem; /* フォントサイズ調整 */
+                font-size: 1.5rem;
             }
 
             .count {
@@ -244,35 +241,37 @@
             }
 
             button {
-                width: 40%; /* PC用の画面ではもう少し小さくする */
+                width: 40%;
             }
 
             .charts-section {
-                flex-direction: row; /* グラフを横に配置 */
-                justify-content: center; /* 中央寄せに調整 */
+                flex-direction: row;
+                justify-content: center;
             }
 
             .chart-container {
                 max-width: 400px;
-                margin: 0 5px; /* 円グラフの間隔を調整 */
+                margin: 0 5px;
             }
         }
 
         @media (max-width: 768px) {
-            /* 縦向き用の調整 */
             .portrait #counters {
-                grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
-                grid-template-rows: repeat(3, 1fr); /* 3行 */
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, 1fr);
             }
 
             .landscape #counters {
-                grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
-                grid-template-rows: repeat(2, 1fr); /* 2行 */
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
             }
 
             .landscape.mobile #counters {
-                grid-template-columns: 1fr 1fr 1fr; /* 横向きスマホの場合は3列 */
-                grid-template-rows: 1fr 1fr; /* 2行 */
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: auto auto;
+                grid-template-areas:
+                  "item1 item2 item3"
+                  "item4 item5 .";
             }
 
             .counter-container {
@@ -291,11 +290,8 @@
             }
         }
     </style>
-    <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <!-- Firebase Realtime Database -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <!-- Include Chart.js and the data labels plugin from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
@@ -310,7 +306,7 @@
     </div>
     <div class="current-day" id="current-day">現在の設定: 1日目</div>
     <div class="counters-section">
-        <div id="counters" class="landscape"> <!-- 初期クラスを設定 -->
+        <div id="counters" class="landscape">
             <div class="counter-container" id="plain-counter" style="border-top: 5px solid #007BFF;">
                 <h2>プレーン</h2>
                 <div class="count" id="plain-count">0/30</div>
@@ -499,17 +495,17 @@
 
             function updatePieCharts(counters) {
                 const countData = [
-                    parseInt(counters.plain, 10) || 0, 
-                    parseInt(counters.choco, 10) || 0, 
-                    parseInt(counters.strawberry, 10) || 0, 
-                    parseInt(counters.matcha, 10) || 0, 
+                    parseInt(counters.plain, 10) || 0,
+                    parseInt(counters.choco, 10) || 0,
+                    parseInt(counters.strawberry, 10) || 0,
+                    parseInt(counters.matcha, 10) || 0,
                     parseInt(counters.jdk, 10) || 0
                 ];
                 const valueData = [
-                    (parseInt(counters.plain, 10) || 0) * values.plain, 
-                    (parseInt(counters.choco, 10) || 0) * values.choco, 
-                    (parseInt(counters.strawberry, 10) || 0) * values.strawberry, 
-                    (parseInt(counters.matcha, 10) || 0) * values.matcha, 
+                    (parseInt(counters.plain, 10) || 0) * values.plain,
+                    (parseInt(counters.choco, 10) || 0) * values.choco,
+                    (parseInt(counters.strawberry, 10) || 0) * values.strawberry,
+                    (parseInt(counters.matcha, 10) || 0) * values.matcha,
                     (parseInt(counters.jdk, 10) || 0) * values.jdk
                 ];
 
@@ -541,7 +537,6 @@
             mediaQuery.addEventListener('change', applyTheme);
             applyTheme(mediaQuery);
 
-            // ユーザーエージェントを使用してデバイスの種類を判定
             function getDeviceType() {
                 const ua = navigator.userAgent;
                 if (/Mobi|Android/i.test(ua)) {
@@ -559,7 +554,6 @@
                 countersElement.classList.add('desktop');
             }
 
-            // 画面の向きを監視してCSSクラスを変更
             function updateOrientation() {
                 const isPortrait = window.matchMedia("(orientation: portrait)").matches;
                 if (isPortrait) {
@@ -577,7 +571,6 @@
             window.addEventListener('orientationchange', updateOrientation);
             window.addEventListener('resize', updateOrientation);
 
-            // 初期表示時の向きを設定
             updateOrientation();
 
             window.changeCount = changeCount;
