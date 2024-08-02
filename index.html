@@ -106,7 +106,6 @@
             white-space: nowrap; /* テキストが折り返されないようにする */
             width: 100%; /* 幅を100%に設定 */
             text-align: center; /* テキストを中央揃え */
-            max-width: 100px; /* 固定幅を少し小さく設定 */
         }
 
         .amount {
@@ -259,16 +258,60 @@
             }
         }
 
+       @media (max-width: 768px) {
+    /* 縦向き用の調整 */
+    .portrait #counters {
+        grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
+        grid-template-rows: repeat(3, 1fr); /* 3行 */
+    }
+
+    .landscape #counters {
+        grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
+        grid-template-rows: repeat(2, 1fr); /* 2行 */
+    }
+
+    .landscape.mobile #counters {
+        grid-template-columns: repeat(3, 1fr); /* 横向きスマホの場合は3列 */
+        grid-template-rows: auto auto; /* 自動調整 */
+        grid-template-areas:
+          "item1 item2 item3"
+          "item4 item5 .";
+    }
+
+    .counter-container {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .charts-section {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .chart-container {
+        max-width: 100%;
+        margin: 10px 0;
+    }
+}
+
         @media (max-width: 768px) {
-            #counters {
-                grid-template-columns: repeat(5, 1fr); /* 横向きやスマホ用の調整で1行に5つ */
-                grid-template-rows: auto; /* 自動調整 */
-                overflow-x: auto; /* 横スクロールを有効にする */
-                white-space: nowrap; /* 横並びにする */
+            /* 縦向き用の調整 */
+            .portrait #counters {
+                grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
+                grid-template-rows: repeat(3, 1fr); /* 3行 */
+            }
+
+            .landscape #counters {
+                grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
+                grid-template-rows: repeat(2, 1fr); /* 2行 */
+            }
+
+            .landscape.mobile #counters {
+                grid-template-columns: 1fr 1fr 1fr; /* 横向きスマホの場合は3列 */
+                grid-template-rows: 1fr 1fr; /* 2行 */
             }
 
             .counter-container {
-                display: inline-block; /* 横並びにするためにインラインブロックに変更 */
                 width: 100%;
                 padding: 1rem;
             }
@@ -307,7 +350,7 @@
             <div class="counter-container" id="plain-counter" style="border-top: 5px solid #007BFF;">
                 <h2>プレーン</h2>
                 <div class="count" id="plain-count">0/30</div>
-                <div class="remaining" id="plain-remaining">残り: 30 個</div>
+                <div class="remaining" id="plain-remaining" style="width: 100px;">残り: 30 個</div>
                 <div class="amount" id="plain-amount">0 円</div>
                 <div class="button-group">
                     <button onclick="changeCount('plain', 1)" class="icon-plus" data-icon="+"></button>
@@ -317,7 +360,7 @@
             <div class="counter-container" id="choco-counter" style="border-top: 5px solid #8B4513;">
                 <h2>チョコ</h2>
                 <div class="count" id="choco-count">0/100</div>
-                <div class="remaining" id="choco-remaining">残り: 100 個</div>
+                <div class="remaining" id="choco-remaining" style="width: 100px;">残り: 100 個</div>
                 <div class="amount" id="choco-amount">0 円</div>
                 <div class="button-group">
                     <button onclick="changeCount('choco', 1)" class="icon-plus" data-icon="+"></button>
@@ -327,7 +370,7 @@
             <div class="counter-container" id="strawberry-counter" style="border-top: 5px solid #FF6347;">
                 <h2>いちご</h2>
                 <div class="count" id="strawberry-count">0/100</div>
-                <div class="remaining" id="strawberry-remaining">残り: 100 個</div>
+                <div class="remaining" id="strawberry-remaining" style="width: 100px;">残り: 100 個</div>
                 <div class="amount" id="strawberry-amount">0 円</div>
                 <div class="button-group">
                     <button onclick="changeCount('strawberry', 1)" class="icon-plus" data-icon="+"></button>
@@ -337,7 +380,7 @@
             <div class="counter-container" id="matcha-counter" style="border-top: 5px solid #3CB371;">
                 <h2>抹茶</h2>
                 <div class="count" id="matcha-count">0/50</div>
-                <div class="remaining" id="matcha-remaining">残り: 50 個</div>
+                <div class="remaining" id="matcha-remaining" style="width: 100px;">残り: 50 個</div>
                 <div class="amount" id="matcha-amount">0 円</div>
                 <div class="button-group">
                     <button onclick="changeCount('matcha', 1)" class="icon-plus" data-icon="+"></button>
@@ -347,7 +390,7 @@
             <div class="counter-container" id="jdk-counter" style="border-top: 5px solid #FFD700;">
                 <h2>JDK</h2>
                 <div class="count" id="jdk-count">0/20</div>
-                <div class="remaining" id="jdk-remaining">残り: 20 個</div>
+                <div class="remaining" id="jdk-remaining" style="width: 100px;">残り: 20 個</div>
                 <div class="amount" id="jdk-amount">0 円</div>
                 <div class="button-group">
                     <button onclick="changeCount('jdk', 1)" class="icon-plus" data-icon="+"></button>
