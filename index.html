@@ -104,8 +104,10 @@
             font-size: 1.2rem;
             color: inherit;
             white-space: nowrap; /* テキストが折り返されないようにする */
-            width: 100%; /* 幅を100%に設定 */
-            text-align: center; /* テキストを中央揃え */
+            display: flex; /* フレックスボックスを使用 */
+            justify-content: center; /* 水平方向に中央寄せ */
+            align-items: center; /* 垂直方向に中央寄せ */
+            height: 1.5em; /* 固定高さを設定 */
         }
 
         .amount {
