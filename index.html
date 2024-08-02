@@ -454,16 +454,16 @@
                 for (let type in counters) {
                     const count = parseInt(counters[type], 10) || 0;
                     const remaining = limits[currentDay][type] - count;
-                    document.getElementById(${type}-count).innerText = ${count}/${limits[currentDay][type]};
-                    document.getElementById(${type}-remaining).innerText = remaining === 0 ? '売り切れ' : 残り: ${remaining} 個;
-                    document.getElementById(${type}-amount).innerText = ${count * values[type]} 円;
+                    document.getElementById(`${type}-count`).innerText = `${count}/${limits[currentDay][type]}`;
+                    document.getElementById(`${type}-remaining`).innerText = remaining === 0 ? '売り切れ' : `残り: ${remaining} 個`;
+                    document.getElementById(`${type}-amount`).innerText = `${count * values[type]} 円`;
                 }
                 updateTotals(counters);
                 updatePieCharts(counters);
             }
 
             function changeCount(type, delta) {
-                const currentCountRef = countersRef.child(${currentDay}/${type});
+                const currentCountRef = countersRef.child(`${currentDay}/${type}`);
                 currentCountRef.transaction(count => {
                     const newCount = (parseInt(count, 10) || 0) + delta;
                     if (newCount >= 0 && newCount <= limits[currentDay][type]) {
@@ -487,8 +487,8 @@
                 const totalCount = Object.values(counters).reduce((sum, count) => sum + (parseInt(count, 10) || 0), 0);
                 const totalAmount = Object.entries(counters).reduce((sum, [key, count]) => sum + ((parseInt(count, 10) || 0) * values[key]), 0);
 
-                document.getElementById('total-count').innerText = 総数量: ${totalCount} 個;
-                document.getElementById('total-amount').innerText = 総金額: ${totalAmount} 円;
+                document.getElementById('total-count').innerText = `総数量: ${totalCount} 個`;
+                document.getElementById('total-amount').innerText = `総金額: ${totalAmount} 円`;
             }
 
             function createPieChart(canvasId, title, backgroundColors, unit) {
@@ -516,7 +516,7 @@
                                 color: '#fff',
                                 formatter: (value, context) => {
                                     if (value > 0) {
-                                        return ${context.chart.data.labels[context.dataIndex]}: ${value}${unit};
+                                        return `${context.chart.data.labels[context.dataIndex]}: ${value}${unit}`;
                                     } else {
                                         return '';
                                     }
@@ -557,7 +557,7 @@
             function confirmDayChange(selectedDay) {
                 countersRef.child(currentDay).off('value');
                 currentDay = selectedDay === '1' ? 'day1' : 'day2';
-                document.getElementById('current-day').innerText = 現在の設定: ${currentDay === 'day1' ? '1日目' : '2日目'};
+                document.getElementById('current-day').innerText = `現在の設定: ${currentDay === 'day1' ? '1日目' : '2日目'}`;
                 countersRef.child(currentDay).once('value').then(snapshot => {
                     updateUI(snapshot.val() || {});
                 });
