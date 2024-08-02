@@ -104,9 +104,8 @@
             font-size: 1.2rem;
             color: inherit;
             white-space: nowrap; /* テキストが折り返されないようにする */
-            font-family: 'Courier New', Courier, monospace; /* 等幅フォントを設定 */
-            width: 100px; /* 固定幅を設定 */
-            text-align: center; /* 中央揃え */
+            width: 50%; /* 表示幅をカウンターの幅より小さく設定 */
+            margin: 0 auto; /* 中央揃え */
         }
 
         .amount {
@@ -258,42 +257,6 @@
                 margin: 0 5px; /* 円グラフの間隔を調整 */
             }
         }
-
-       @media (max-width: 768px) {
-    /* 縦向き用の調整 */
-    .portrait #counters {
-        grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
-        grid-template-rows: repeat(3, 1fr); /* 3行 */
-    }
-
-    .landscape #counters {
-        grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
-        grid-template-rows: repeat(2, 1fr); /* 2行 */
-    }
-
-    .landscape.mobile #counters {
-        grid-template-columns: repeat(3, 1fr); /* 横向きスマホの場合は3列 */
-        grid-template-rows: auto auto; /* 自動調整 */
-        grid-template-areas:
-          "item1 item2 item3"
-          "item4 item5 .";
-    }
-
-    .counter-container {
-        width: 100%;
-        padding: 1rem;
-    }
-
-    .charts-section {
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .chart-container {
-        max-width: 100%;
-        margin: 10px 0;
-    }
-}
 
         @media (max-width: 768px) {
             /* 縦向き用の調整 */
