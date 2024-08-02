@@ -52,15 +52,12 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* デフォルトは2列 */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             grid-gap: 1rem;
             padding: 1rem;
             width: 100%;
-            max-width: 100%;
             justify-items: center;
             box-sizing: border-box;
-            margin: 0 auto;
-            justify-content: center;
         }
 
         .counter-container {
@@ -73,7 +70,6 @@
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
             width: 100%;
             max-width: 300px; /* カウンターの最大幅を設定 */
-            height: 100%; /* カウンターの高さをボタンの高さに対応させる */
             box-sizing: border-box;
         }
 
@@ -104,10 +100,6 @@
             font-size: 1.2rem;
             color: inherit;
             white-space: nowrap; /* テキストが折り返されないようにする */
-            display: flex; /* フレックスボックスを使用 */
-            justify-content: center; /* 水平方向に中央寄せ */
-            align-items: center; /* 垂直方向に中央寄せ */
-            height: 1.5em; /* 固定高さを設定 */
         }
 
         .amount {
@@ -124,9 +116,9 @@
         button {
             width: 50%; /* ボタンの幅をカウンターコンテナの幅の50%に設定 */
             aspect-ratio: 1 / 1; /* ボタンのアスペクト比を1:1に設定 */
-            max-width: 80px; /* ボタンの最大幅を設定 */
-            max-height: 80px; /* ボタンの最大高さを設定 */
-            font-size: calc(1.4rem + 0.2vw); /* 幅に応じてfont-size調整 */
+            max-width: 100px; /* ボタンの最大幅を設定 */
+            max-height: 100px; /* ボタンの最大高さを設定 */
+            font-size: calc(1.2rem + 0.2vw); /* 幅に応じてfont-size調整 */
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -152,7 +144,7 @@
         }
 
         .icon-plus::before, .icon-minus::before {
-            font-size: calc(1.4rem + 0.2vw); /* ボタンのサイズに応じてアイコンのフォントサイズを調整 */
+            font-size: calc(1.2rem + 0.2vw); /* ボタンのサイズに応じてアイコンのフォントサイズを調整 */
             content: attr(data-icon); /* アイコンの内容を設定 */
         }
 
@@ -168,7 +160,6 @@
             max-width: 90%;
             transition: background-color 0.3s, color 0.3s;
             box-sizing: border-box;
-            margin: 0 auto;
         }
 
         .dark-mode .totals-container {
@@ -212,7 +203,6 @@
             max-width: 1200px;
             padding: 1rem;
             box-sizing: border-box;
-            margin: 0 auto;
         }
 
         .chart-container {
@@ -225,99 +215,18 @@
         }
 
         @media (min-width: 769px) {
-            /* 横向きやPC用の調整 */
-            #counters {
-                grid-template-columns: repeat(5, 1fr); /* 1行に5つ */
-                grid-gap: 1rem;
-                justify-items: center;
-                justify-content: center;
-            }
-
-            .counter-container {
-                padding: 1.5rem;
-            }
-
-            .counter-container h2, .count, .remaining, .amount {
-                font-size: 1.5rem; /* フォントサイズ調整 */
-            }
-
-            .count {
-                font-size: 2.2rem;
-            }
-
-            button {
-                width: 40%; /* PC用の画面ではもう少し小さくする */
-            }
-
             .charts-section {
-                flex-direction: row; /* グラフを横に配置 */
-                justify-content: center; /* 中央寄せに調整 */
+                flex-direction: row;
+                justify-content: center;
             }
 
             .chart-container {
                 max-width: 400px;
-                margin: 0 5px; /* 円グラフの間隔を調整 */
+                margin: 0 5px;
             }
         }
 
-       @media (max-width: 768px) {
-    /* 縦向き用の調整 */
-    .portrait #counters {
-        grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
-        grid-template-rows: repeat(3, 1fr); /* 3行 */
-    }
-
-    .landscape #counters {
-        grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
-        grid-template-rows: repeat(2, 1fr); /* 2行 */
-    }
-
-    .landscape.mobile #counters {
-        grid-template-columns: repeat(3, 1fr); /* 横向きスマホの場合は3列 */
-        grid-template-rows: auto auto; /* 自動調整 */
-        grid-template-areas:
-          "item1 item2 item3"
-          "item4 item5 .";
-    }
-
-    .counter-container {
-        width: 100%;
-        padding: 1rem;
-    }
-
-    .charts-section {
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .chart-container {
-        max-width: 100%;
-        margin: 10px 0;
-    }
-}
-
         @media (max-width: 768px) {
-            /* 縦向き用の調整 */
-            .portrait #counters {
-                grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
-                grid-template-rows: repeat(3, 1fr); /* 3行 */
-            }
-
-            .landscape #counters {
-                grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
-                grid-template-rows: repeat(2, 1fr); /* 2行 */
-            }
-
-            .landscape.mobile #counters {
-                grid-template-columns: 1fr 1fr 1fr; /* 横向きスマホの場合は3列 */
-                grid-template-rows: 1fr 1fr; /* 2行 */
-            }
-
-            .counter-container {
-                width: 100%;
-                padding: 1rem;
-            }
-
             .charts-section {
                 flex-direction: column;
                 justify-content: center;
