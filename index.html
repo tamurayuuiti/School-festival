@@ -469,18 +469,24 @@
 
         // カウント変更をログに記録する関数
         function logCountChange(type, delta, newCount) {
-            const logRef = database.ref('logs').push();
-            const logEntry = {
-                type: type, // 変更されたカウントのタイプ（プレーン、チョコ、など）
-                change: delta > 0 ? 'increment' : 'decrement', // 増加か減少か
-                amountChanged: delta, // 変更量
-                newCount: newCount, // 変更後の新しいカウント
-                timestamp: firebase.database.ServerValue.TIMESTAMP // Firebaseサーバーのタイムスタンプ
-            };
-            logRef.set(logEntry)
-                .then(() => console.log('Log entry saved successfully:', logEntry))
-                .catch(error => console.error('Failed to save log entry:', error));
-        }
+    const logRef = database.ref('logs').push();
+    
+    // 現在の時刻を取得し、わかりやすい形式に変換
+    const timestamp = new Date();
+    const formattedTimestamp = `${timestamp.getFullYear()}-${String(timestamp.getMonth() + 1).padStart(2, '0')}-${String(timestamp.getDate()).padStart(2, '0')} ${String(timestamp.getHours()).padStart(2, '0')}:${String(timestamp.getMinutes()).padStart(2, '0')}:${String(timestamp.getSeconds()).padStart(2, '0')}`;
+
+    const logEntry = {
+        type: type, // 変更されたカウントのタイプ（プレーン、チョコ、など）
+        change: delta > 0 ? 'increment' : 'decrement', // 増加か減少か
+        amountChanged: delta, // 変更量
+        newCount: newCount, // 変更後の新しいカウント
+        timestamp: formattedTimestamp // わかりやすい形式のタイムスタンプ
+    };
+
+    logRef.set(logEntry)
+        .then(() => console.log('Log entry saved successfully:', logEntry))
+        .catch(error => console.error('Failed to save log entry:', error));
+}
 
         function changeCount(type, delta) {
             const currentCountRef = countersRef.child(`${currentDay}/${type}`);
