@@ -464,6 +464,7 @@
                     document.getElementById(`${type}-amount`).innerText = `${count * values[type]} 円`;
                 }
                 updateTotals(counters);
+                
         const day = document.querySelector('input[name="day"]:checked').value; // 現在選択されている日
         const timestamp = new Date().toISOString();
         const logData = {
@@ -473,8 +474,9 @@
             timestamp: timestamp
         };
 
-        firebase.database().ref(`logs/${day}`).push(logData);  // データベースに保存（行番号 30）
+        firebase.database().ref(`logs/${day}`).push(logData);  // データベースに保存
     }
+            
                 updatePieCharts(counters);
             }
 
