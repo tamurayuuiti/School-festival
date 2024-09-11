@@ -416,214 +416,229 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const firebaseConfig = {
-                apiKey: "AIzaSyDfmjWjPl786cVBXzqlsiZsS4MUFbwrNNM",
-                authDomain: "school-festival-e4c8d.firebaseapp.com",
-                databaseURL: "https://school-festival-e4c8d-default-rtdb.firebaseio.com",
-                projectId: "school-festival-e4c8d",
-                storageBucket: "school-festival-e4c8d.appspot.com",
-                messagingSenderId: "658868728855",
-                appId: "1:658868728855:web:8d7497c6838f5a42d21852"
+    document.addEventListener('DOMContentLoaded', function() {
+        const firebaseConfig = {
+            apiKey: "AIzaSyDfmjWjPl786cVBXzqlsiZsS4MUFbwrNNM",
+            authDomain: "school-festival-e4c8d.firebaseapp.com",
+            databaseURL: "https://school-festival-e4c8d-default-rtdb.firebaseio.com",
+            projectId: "school-festival-e4c8d",
+            storageBucket: "school-festival-e4c8d.appspot.com",
+            messagingSenderId: "658868728855",
+            appId: "1:658868728855:web:8d7497c6838f5a42d21852"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const countersRef = database.ref('counters');
+
+        countersRef.once('value').then(snapshot => {
+            if (!snapshot.exists()) {
+                countersRef.set({
+                    day1: { plain: 0, choco: 0, strawberry: 0, matcha: 0, jdk: 0 },
+                    day2: { plain: 0, choco: 0, strawberry: 0, matcha: 0, jdk: 0 }
+                });
+            }
+        });
+
+        let currentDay = 'day1';
+        const limits = {
+            day1: { plain: 30, choco: 100, strawberry: 100, matcha: 50, jdk: 20 },
+            day2: { plain: 30, choco: 150, strawberry: 150, matcha: 40, jdk: 30 }
+        };
+
+        const values = {
+            plain: 100,
+            choco: 100,
+            strawberry: 100,
+            matcha: 100,
+            jdk: 200
+        };
+
+        function updateUI(counters) {
+            if (!counters) return;
+            for (let type in counters) {
+                const count = parseInt(counters[type], 10) || 0;
+                const remaining = limits[currentDay][type] - count;
+                document.getElementById(`${type}-count`).innerText = `${count}/${limits[currentDay][type]}`;
+                document.getElementById(`${type}-remaining`).innerText = remaining === 0 ? '売り切れ' : `残り: ${remaining} 個`;
+                document.getElementById(`${type}-amount`).innerText = `${count * values[type]} 円`;
+            }
+            updateTotals(counters);
+            updatePieCharts(counters);
+        }
+
+        // カウント変更をログに記録する関数
+        function logCountChange(type, delta, newCount) {
+            const logRef = database.ref('logs').push();
+            const logEntry = {
+                type: type, // 変更されたカウントのタイプ（プレーン、チョコ、など）
+                change: delta > 0 ? 'increment' : 'decrement', // 増加か減少か
+                amountChanged: delta, // 変更量
+                newCount: newCount, // 変更後の新しいカウント
+                timestamp: firebase.database.ServerValue.TIMESTAMP // Firebaseサーバーのタイムスタンプ
             };
+            logRef.set(logEntry)
+                .then(() => console.log('Log entry saved successfully:', logEntry))
+                .catch(error => console.error('Failed to save log entry:', error));
+        }
 
-            firebase.initializeApp(firebaseConfig);
-            const database = firebase.database();
-            const countersRef = database.ref('counters');
+        function changeCount(type, delta) {
+            const currentCountRef = countersRef.child(`${currentDay}/${type}`);
+            currentCountRef.transaction(count => {
+                const newCount = (parseInt(count, 10) || 0) + delta;
+                if (newCount >= 0 && newCount <= limits[currentDay][type]) {
+                    // ログの記録を追加
+                    logCountChange(type, delta, newCount);
+                    return newCount;
+                }
+                return count;
+            });
+        }
 
-            countersRef.once('value').then(snapshot => {
-                if (!snapshot.exists()) {
-                    countersRef.set({
-                        day1: { plain: 0, choco: 0, strawberry: 0, matcha: 0, jdk: 0 },
-                        day2: { plain: 0, choco: 0, strawberry: 0, matcha: 0, jdk: 0 }
-                    });
+        function updateRealTimeListener() {
+            countersRef.child(currentDay).on('value', snapshot => {
+                if (snapshot.exists()) {
+                    updateUI(snapshot.val());
                 }
             });
+        }
 
-            let currentDay = 'day1';
-            const limits = {
-                day1: { plain: 30, choco: 100, strawberry: 100, matcha: 50, jdk: 20 },
-                day2: { plain: 30, choco: 150, strawberry: 150, matcha: 40, jdk: 30 }
-            };
+        updateRealTimeListener();
 
-            const values = {
-                plain: 100,
-                choco: 100,
-                strawberry: 100,
-                matcha: 100,
-                jdk: 200
-            };
+        function updateTotals(counters) {
+            const totalCount = Object.values(counters).reduce((sum, count) => sum + (parseInt(count, 10) || 0), 0);
+            const totalAmount = Object.entries(counters).reduce((sum, [key, count]) => sum + ((parseInt(count, 10) || 0) * values[key]), 0);
 
-            function updateUI(counters) {
-                if (!counters) return;
-                for (let type in counters) {
-                    const count = parseInt(counters[type], 10) || 0;
-                    const remaining = limits[currentDay][type] - count;
-                    document.getElementById(`${type}-count`).innerText = `${count}/${limits[currentDay][type]}`;
-                    document.getElementById(`${type}-remaining`).innerText = remaining === 0 ? '売り切れ' : `残り: ${remaining} 個`;
-                    document.getElementById(`${type}-amount`).innerText = `${count * values[type]} 円`;
-                }
-                updateTotals(counters);
-                updatePieCharts(counters);
-            }
-               
-            function changeCount(type, delta) {
-                const currentCountRef = countersRef.child(`${currentDay}/${type}`);
-                currentCountRef.transaction(count => {
-                    const newCount = (parseInt(count, 10) || 0) + delta;
-                    if (newCount >= 0 && newCount <= limits[currentDay][type]) {
-                        return newCount;
-                    }
-                    return count;
-                });
-            }
+            document.getElementById('total-count').innerText = `総数量: ${totalCount} 個`;
+            document.getElementById('total-amount').innerText = `総金額: ${totalAmount} 円`;
+        }
 
-            function updateRealTimeListener() {
-                countersRef.child(currentDay).on('value', snapshot => {
-                    if (snapshot.exists()) {
-                        updateUI(snapshot.val());
-                    }
-                });
-            }
-
-            updateRealTimeListener();
-
-            function updateTotals(counters) {
-                const totalCount = Object.values(counters).reduce((sum, count) => sum + (parseInt(count, 10) || 0), 0);
-                const totalAmount = Object.entries(counters).reduce((sum, [key, count]) => sum + ((parseInt(count, 10) || 0) * values[key]), 0);
-
-                document.getElementById('total-count').innerText = `総数量: ${totalCount} 個`;
-                document.getElementById('total-amount').innerText = `総金額: ${totalAmount} 円`;
-            }
-
-            function createPieChart(canvasId, title, backgroundColors, unit) {
-                return new Chart(document.getElementById(canvasId).getContext('2d'), {
-                    type: 'pie',
-                    data: {
-                        labels: ['プレーン', 'チョコ', 'いちご', '抹茶', 'JDK'],
-                        datasets: [{
-                            data: [0, 0, 0, 0, 0],
-                            backgroundColor: backgroundColors
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: {
-                            legend: {
-                                position: 'top'
-                            },
-                            title: {
-                                display: true,
-                                text: title
-                            },
-                            datalabels: {
-                                color: '#fff',
-                                formatter: (value, context) => {
-                                    if (value > 0) {
-                                        return `${context.chart.data.labels[context.dataIndex]}: ${value}${unit}`;
-                                    } else {
-                                        return '';
-                                    }
+        function createPieChart(canvasId, title, backgroundColors, unit) {
+            return new Chart(document.getElementById(canvasId).getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: ['プレーン', 'チョコ', 'いちご', '抹茶', 'JDK'],
+                    datasets: [{
+                        data: [0, 0, 0, 0, 0],
+                        backgroundColor: backgroundColors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: title
+                        },
+                        datalabels: {
+                            color: '#fff',
+                            formatter: (value, context) => {
+                                if (value > 0) {
+                                    return `${context.chart.data.labels[context.dataIndex]}: ${value}${unit}`;
+                                } else {
+                                    return '';
                                 }
                             }
                         }
-                    },
-                    plugins: [ChartDataLabels]
-                });
-            }
-
-            let countPieChart = createPieChart('count-pie-chart', '数量の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '個');
-            let valuePieChart = createPieChart('value-pie-chart', '金額の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '円');
-
-            function updatePieCharts(counters) {
-                const countData = [
-                    parseInt(counters.plain, 10) || 0, 
-                    parseInt(counters.choco, 10) || 0, 
-                    parseInt(counters.strawberry, 10) || 0, 
-                    parseInt(counters.matcha, 10) || 0, 
-                    parseInt(counters.jdk, 10) || 0
-                ];
-                const valueData = [
-                    (parseInt(counters.plain, 10) || 0) * values.plain, 
-                    (parseInt(counters.choco, 10) || 0) * values.choco, 
-                    (parseInt(counters.strawberry, 10) || 0) * values.strawberry, 
-                    (parseInt(counters.matcha, 10) || 0) * values.matcha, 
-                    (parseInt(counters.jdk, 10) || 0) * values.jdk
-                ];
-
-                countPieChart.data.datasets[0].data = countData;
-                countPieChart.update();
-
-                valuePieChart.data.datasets[0].data = valueData;
-                valuePieChart.update();
-            }
-
-            function confirmDayChange(selectedDay) {
-                countersRef.child(currentDay).off('value');
-                currentDay = selectedDay === '1' ? 'day1' : 'day2';
-                document.getElementById('current-day').innerText = `現在の設定: ${currentDay === 'day1' ? '1日目' : '2日目'}`;
-                countersRef.child(currentDay).once('value').then(snapshot => {
-                    updateUI(snapshot.val() || {});
-                });
-                updateRealTimeListener();
-            }
-
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            function applyTheme(e) {
-                if (e.matches) {
-                    document.body.classList.add('dark-mode');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                }
-            }
-            mediaQuery.addEventListener('change', applyTheme);
-            applyTheme(mediaQuery);
-
-            // ユーザーエージェントを使用してデバイスの種類を判定
-            function getDeviceType() {
-                const ua = navigator.userAgent;
-                if (/Mobi|Android/i.test(ua)) {
-                    return 'mobile';
-                }
-                return 'desktop';
-            }
-
-            const deviceType = getDeviceType();
-            const countersElement = document.getElementById('counters');
-
-            if (deviceType === 'mobile') {
-                countersElement.classList.add('mobile');
-            } else {
-                countersElement.classList.add('desktop');
-            }
-
-            // 画面の向きを監視してCSSクラスを変更
-            function updateOrientation() {
-                const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-                if (isPortrait) {
-                    countersElement.classList.remove('landscape');
-                    countersElement.classList.add('portrait');
-                } else {
-                    countersElement.classList.remove('portrait');
-                    countersElement.classList.add('landscape');
-                    if (deviceType === 'mobile') {
-                        countersElement.classList.add('landscape');
                     }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        let countPieChart = createPieChart('count-pie-chart', '数量の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '個');
+        let valuePieChart = createPieChart('value-pie-chart', '金額の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '円');
+
+        function updatePieCharts(counters) {
+            const countData = [
+                parseInt(counters.plain, 10) || 0, 
+                parseInt(counters.choco, 10) || 0, 
+                parseInt(counters.strawberry, 10) || 0, 
+                parseInt(counters.matcha, 10) || 0, 
+                parseInt(counters.jdk, 10) || 0
+            ];
+            const valueData = [
+                (parseInt(counters.plain, 10) || 0) * values.plain, 
+                (parseInt(counters.choco, 10) || 0) * values.choco, 
+                (parseInt(counters.strawberry, 10) || 0) * values.strawberry, 
+                (parseInt(counters.matcha, 10) || 0) * values.matcha, 
+                (parseInt(counters.jdk, 10) || 0) * values.jdk
+            ];
+
+            countPieChart.data.datasets[0].data = countData;
+            countPieChart.update();
+
+            valuePieChart.data.datasets[0].data = valueData;
+            valuePieChart.update();
+        }
+
+        function confirmDayChange(selectedDay) {
+            countersRef.child(currentDay).off('value');
+            currentDay = selectedDay === '1' ? 'day1' : 'day2';
+            document.getElementById('current-day').innerText = `現在の設定: ${currentDay === 'day1' ? '1日目' : '2日目'}`;
+            countersRef.child(currentDay).once('value').then(snapshot => {
+                updateUI(snapshot.val() || {});
+            });
+            updateRealTimeListener();
+        }
+
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        function applyTheme(e) {
+            if (e.matches) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+        mediaQuery.addEventListener('change', applyTheme);
+        applyTheme(mediaQuery);
+
+        // ユーザーエージェントを使用してデバイスの種類を判定
+        function getDeviceType() {
+            const ua = navigator.userAgent;
+            if (/Mobi|Android/i.test(ua)) {
+                return 'mobile';
+            }
+            return 'desktop';
+        }
+
+        const deviceType = getDeviceType();
+        const countersElement = document.getElementById('counters');
+
+        if (deviceType === 'mobile') {
+            countersElement.classList.add('mobile');
+        } else {
+            countersElement.classList.add('desktop');
+        }
+
+        // 画面の向きを監視してCSSクラスを変更
+        function updateOrientation() {
+            const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+            if (isPortrait) {
+                countersElement.classList.remove('landscape');
+                countersElement.classList.add('portrait');
+            } else {
+                countersElement.classList.remove('portrait');
+                countersElement.classList.add('landscape');
+                if (deviceType === 'mobile') {
+                    countersElement.classList.add('landscape');
                 }
             }
+        }
 
-            window.addEventListener('orientationchange', updateOrientation);
-            window.addEventListener('resize', updateOrientation);
+        window.addEventListener('orientationchange', updateOrientation);
+        window.addEventListener('resize', updateOrientation);
 
-            // 初期表示時の向きを設定
-            updateOrientation();
+        // 初期表示時の向きを設定
+        updateOrientation();
 
-            window.changeCount = changeCount;
-            window.confirmDayChange = confirmDayChange;
+        window.changeCount = changeCount;
+        window.confirmDayChange = confirmDayChange;
 
-            console.log('Firebase initialized with project:', firebaseConfig.projectId);
-        });
-    </script>
-</body>
-</html>
+        console.log('Firebase initialized with project:', firebaseConfig.projectId);
+    });
+</script>
