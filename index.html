@@ -464,8 +464,11 @@
                     document.getElementById(`${type}-amount`).innerText = `${count * values[type]} 円`;
                 }
                 updateTotals(counters);
-                
-        const day = document.querySelector('input[name="day"]:checked').value; // 現在選択されている日
+                updatePieCharts(counters);
+            }
+
+  // === ここから新たに追加 ===
+        const day = document.querySelector('input[name="day"]:checked').value; // 現在選択されている日（行番号 24）
         const timestamp = new Date().toISOString();
         const logData = {
             item: item,
@@ -474,12 +477,10 @@
             timestamp: timestamp
         };
 
-        firebase.database().ref(`logs/${day}`).push(logData);  // データベースに保存
+        firebase.database().ref(`logs/${day}`).push(logData);  // データベースに保存（行番号 30）
+        // === 新たに追加終了 ===
     }
-            
-                updatePieCharts(counters);
-            }
-
+                                  
             function changeCount(type, delta) {
                 const currentCountRef = countersRef.child(`${currentDay}/${type}`);
                 currentCountRef.transaction(count => {
