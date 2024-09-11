@@ -466,21 +466,7 @@
                 updateTotals(counters);
                 updatePieCharts(counters);
             }
-
-  // === ここから新たに追加 ===
-        const day = document.querySelector('input[name="day"]:checked').value; // 現在選択されている日（行番号 24）
-        const timestamp = new Date().toISOString();
-        const logData = {
-            item: item,
-            change: change,
-            newCount: newCount,
-            timestamp: timestamp
-        };
-
-        firebase.database().ref(`logs/${day}`).push(logData);  // データベースに保存（行番号 30）
-        // === 新たに追加終了 ===
-    }
-                                  
+               
             function changeCount(type, delta) {
                 const currentCountRef = countersRef.child(`${currentDay}/${type}`);
                 currentCountRef.transaction(count => {
