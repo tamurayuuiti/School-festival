@@ -30,8 +30,8 @@
             padding: 1rem;
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
-            padding-top: env(safe-area-inset-top); /* iPhoneなどでノッチを避ける */
-            padding-bottom: env(safe-area-inset-bottom); /* iPhoneなどでノッチを避ける */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         .dark-mode {
@@ -52,7 +52,7 @@
 
         #counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* デフォルトは2列 */
+            grid-template-columns: repeat(2, 1fr);
             grid-gap: 1rem;
             padding: 1rem;
             width: 100%;
@@ -72,8 +72,8 @@
             text-align: center;
             transition: transform 0.2s, background-color 0.3s, color 0.3s;
             width: 100%;
-            max-width: 300px; /* カウンターの最大幅を設定 */
-            height: 100%; /* カウンターの高さをボタンの高さに対応させる */
+            max-width: 300px;
+            height: 100%;
             box-sizing: border-box;
         }
 
@@ -103,7 +103,7 @@
         .remaining {
             font-size: 5vw;
             color: inherit;
-            white-space: nowrap; /* テキストが折り返されないようにする */
+            white-space: nowrap;
         }
 
         .amount {
@@ -118,11 +118,11 @@
         }
 
         button {
-            width: 50%; /* ボタンの幅をカウンターコンテナの幅の50%に設定 */
-            aspect-ratio: 1 / 1; /* ボタンのアスペクト比を1:1に設定 */
-            max-width: 100px; /* ボタンの最大幅を設定 */
-            max-height: 100px; /* ボタンの最大高さを設定 */
-            font-size: calc(1.2rem + 0.2vw); /* 幅に応じてfont-size調整 */
+            width: 50%;
+            aspect-ratio: 1 / 1;
+            max-width: 100px;
+            max-height: 100px;
+            font-size: calc(1.2rem + 0.2vw);
             border: none;
             border-radius: 8px;
             background-color: var(--button-bg);
@@ -148,8 +148,8 @@
         }
 
         .icon-plus::before, .icon-minus::before {
-            font-size: calc(1.2rem + 0.2vw); /* ボタンのサイズに応じてアイコンのフォントサイズを調整 */
-            content: attr(data-icon); /* アイコンの内容を設定 */
+            font-size: calc(1.2rem + 0.2vw);
+            content: attr(data-icon);
         }
 
         .totals-container {
@@ -182,7 +182,7 @@
         }
 
         .day-select {
-            margin: 1.4rem 0 1.3rem; /* 位置を少し下に調整 */
+            margin: 1.4rem 0 1.3rem;
             text-align: center;
             width: 100%;
         }
@@ -201,9 +201,8 @@
         }
 
         @media (min-width: 769px) {
-            /* 横向きやPC用の調整 */
             #counters {
-                grid-template-columns: repeat(5, 1fr); /* 1行に5つ */
+                grid-template-columns: repeat(5, 1fr);
                 grid-gap: 1rem;
                 justify-items: center;
                 justify-content: center;
@@ -214,64 +213,31 @@
             }
 
             .counter-container h2, .count, .amount {
-        font-size: 1.6rem; /* フォントサイズ調整 */
-    }
-
-    .remaining {
-        font-size: 1.4rem; /* 横画面時の残り個数の表示サイズを個別に調整 */
-    }
-}
-
-            .count {
-                font-size: 1.85rem;
+                font-size: 1.6rem;
             }
 
-            button {
-                width: 40%; /* PC用の画面ではもう少し小さくする */
+            .remaining {
+                font-size: 1.4rem;
             }
         }
 
-       @media (max-width: 768px) {
-    /* 縦向き用の調整 */
-    .portrait #counters {
-        grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
-        grid-template-rows: repeat(3, 1fr); /* 3行 */
-    }
-
-    .landscape #counters {
-        grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
-        grid-template-rows: repeat(2, 1fr); /* 2行 */
-    }
-
-    .landscape.mobile #counters {
-        grid-template-columns: repeat(3, 1fr); /* 横向きスマホの場合は3列 */
-        grid-template-rows: auto auto; /* 自動調整 */
-        grid-template-areas:
-          "item1 item2 item3"
-          "item4 item5 .";
-    }
-
-    .counter-container {
-        width: 100%;
-        padding: 1rem;
-    }
-}
-
         @media (max-width: 768px) {
-            /* 縦向き用の調整 */
             .portrait #counters {
-                grid-template-columns: repeat(2, 1fr); /* 縦向きの場合は2列 */
-                grid-template-rows: repeat(3, 1fr); /* 3行 */
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, 1fr);
             }
 
             .landscape #counters {
-                grid-template-columns: repeat(3, 1fr); /* 横向きの場合は3列 */
-                grid-template-rows: repeat(2, 1fr); /* 2行 */
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
             }
 
             .landscape.mobile #counters {
-                grid-template-columns: 1fr 1fr 1fr; /* 横向きスマホの場合は3列 */
-                grid-template-rows: 1fr 1fr; /* 2行 */
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: auto auto;
+                grid-template-areas:
+                    "item1 item2 item3"
+                    "item4 item5 .";
             }
 
             .counter-container {
@@ -284,9 +250,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <!-- Firebase Realtime Database -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <!-- Include Chart.js and the data labels plugin from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body>
     <div class="day-select">
@@ -299,7 +262,7 @@
     </div>
     <div class="current-day" id="current-day">現在の設定: 1日目</div>
     <div class="counters-section">
-        <div id="counters" class="landscape"> <!-- 初期クラスを設定 -->
+        <div id="counters" class="landscape">
             <div class="counter-container" id="plain-counter" style="border-top: 5px solid #007BFF;">
                 <h2>プレーン</h2>
                 <div class="count" id="plain-count">0/30</div>
@@ -357,14 +320,6 @@
             <div class="total-value" id="total-amount">総金額: 0 円</div>
         </div>
     </div>
-    <div class="charts-section">
-        <div class="chart-container">
-            <canvas id="count-pie-chart"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="value-pie-chart"></canvas>
-        </div>
-    </div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const firebaseConfig = {
@@ -414,23 +369,20 @@
                 document.getElementById(`${type}-amount`).innerText = `${count * values[type]} 円`;
             }
             updateTotals(counters);
-            updatePieCharts(counters);
         }
 
-        // カウント変更をログに記録する関数
         function logCountChange(type, delta, newCount) {
             const logRef = database.ref('logs').push();
-            
-            // 現在の時刻を取得し、わかりやすい形式に変換
+
             const timestamp = new Date();
             const formattedTimestamp = `${timestamp.getFullYear()}-${String(timestamp.getMonth() + 1).padStart(2, '0')}-${String(timestamp.getDate()).padStart(2, '0')} ${String(timestamp.getHours()).padStart(2, '0')}:${String(timestamp.getMinutes()).padStart(2, '0')}:${String(timestamp.getSeconds()).padStart(2, '0')}`;
 
             const logEntry = {
-                type: type, // 変更されたカウントのタイプ（プレーン、チョコ、など）
-                change: delta > 0 ? 'increment' : 'decrement', // 増加か減少か
-                amountChanged: delta, // 変更量
-                newCount: newCount, // 変更後の新しいカウント
-                timestamp: formattedTimestamp // わかりやすい形式のタイムスタンプ
+                type: type,
+                change: delta > 0 ? 'increment' : 'decrement',
+                amountChanged: delta,
+                newCount: newCount,
+                timestamp: formattedTimestamp
             };
 
             logRef.set(logEntry)
@@ -443,8 +395,7 @@
             currentCountRef.transaction(count => {
                 const newCount = (parseInt(count, 10) || 0) + delta;
                 if (newCount >= 0 && newCount <= limits[currentDay][type]) {
-                    // ログの記録を追加
-                    logCountChange(type, delta, newCount); // 変更後の新しいカウントをログに追加
+                    logCountChange(type, delta, newCount);
                     return newCount;
                 }
                 return count;
@@ -490,7 +441,6 @@
         mediaQuery.addEventListener('change', applyTheme);
         applyTheme(mediaQuery);
 
-        // ユーザーエージェントを使用してデバイスの種類を判定
         function getDeviceType() {
             const ua = navigator.userAgent;
             if (/Mobi|Android/i.test(ua)) {
@@ -508,7 +458,6 @@
             countersElement.classList.add('desktop');
         }
 
-        // 画面の向きを監視してCSSクラスを変更
         function updateOrientation() {
             const isPortrait = window.matchMedia("(orientation: portrait)").matches;
             if (isPortrait) {
@@ -526,7 +475,6 @@
         window.addEventListener('orientationchange', updateOrientation);
         window.addEventListener('resize', updateOrientation);
 
-        // 初期表示時の向きを設定
         updateOrientation();
 
         window.changeCount = changeCount;
@@ -534,4 +482,6 @@
 
         console.log('Firebase initialized with project:', firebaseConfig.projectId);
     });
-</script>
+    </script>
+</body>
+</html>
