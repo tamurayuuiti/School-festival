@@ -31,7 +31,7 @@
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
             padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
+            padding-bottom: calc(env(safe-area-inset-bottom) + 20px); /* ノッチの余白に追加で余白を加える */
         }
 
         .dark-mode {
@@ -154,6 +154,7 @@
 
         .totals-container {
             margin-top: 1.5rem;
+            margin-bottom: 20px; /* 余白を追加 */
             background-color: #ffffff;
             color: #333;
             padding: 1rem;
@@ -382,6 +383,7 @@
                 change: delta > 0 ? 'increment' : 'decrement',
                 amountChanged: delta,
                 newCount: newCount,
+                day: currentDay, // 変更された日付（1日目または2日目）
                 timestamp: formattedTimestamp
             };
 
