@@ -469,69 +469,6 @@
             document.getElementById('total-amount').innerText = `総金額: ${totalAmount} 円`;
         }
 
-        function createPieChart(canvasId, title, backgroundColors, unit) {
-            return new Chart(document.getElementById(canvasId).getContext('2d'), {
-                type: 'pie',
-                data: {
-                    labels: ['プレーン', 'チョコ', 'いちご', '抹茶', 'JDK'],
-                    datasets: [{
-                        data: [0, 0, 0, 0, 0],
-                        backgroundColor: backgroundColors
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            position: 'top'
-                        },
-                        title: {
-                            display: true,
-                            text: title
-                        },
-                        datalabels: {
-                            color: '#fff',
-                            formatter: (value, context) => {
-                                if (value > 0) {
-                                    return `${context.chart.data.labels[context.dataIndex]}: ${value}${unit}`;
-                                } else {
-                                    return '';
-                                }
-                            }
-                        }
-                    }
-                },
-                plugins: [ChartDataLabels]
-            });
-        }
-
-        let countPieChart = createPieChart('count-pie-chart', '数量の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '個');
-        let valuePieChart = createPieChart('value-pie-chart', '金額の分布', ['#007BFF', '#8B4513', '#FF6347', '#3CB371', '#FFD700'], '円');
-
-        function updatePieCharts(counters) {
-            const countData = [
-                parseInt(counters.plain, 10) || 0, 
-                parseInt(counters.choco, 10) || 0, 
-                parseInt(counters.strawberry, 10) || 0, 
-                parseInt(counters.matcha, 10) || 0, 
-                parseInt(counters.jdk, 10) || 0
-            ];
-            const valueData = [
-                (parseInt(counters.plain, 10) || 0) * values.plain, 
-                (parseInt(counters.choco, 10) || 0) * values.choco, 
-                (parseInt(counters.strawberry, 10) || 0) * values.strawberry, 
-                (parseInt(counters.matcha, 10) || 0) * values.matcha, 
-                (parseInt(counters.jdk, 10) || 0) * values.jdk
-            ];
-
-            countPieChart.data.datasets[0].data = countData;
-            countPieChart.update();
-
-            valuePieChart.data.datasets[0].data = valueData;
-            valuePieChart.update();
-        }
-
         function confirmDayChange(selectedDay) {
             countersRef.child(currentDay).off('value');
             currentDay = selectedDay === '1' ? 'day1' : 'day2';
