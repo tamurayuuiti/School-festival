@@ -423,6 +423,13 @@
         }
 
         function confirmDayChange(selectedDay) {
+            // ポップアップでユーザーに確認
+            const isConfirmed = confirm("日付を変更してもよろしいですか？");
+            
+            if (!isConfirmed) {
+                return; // ユーザーがキャンセルした場合、処理を中断
+            }
+
             countersRef.child(currentDay).off('value');
             currentDay = selectedDay === '1' ? 'day1' : 'day2';
             document.getElementById('current-day').innerText = `現在の設定: ${currentDay === 'day1' ? '1日目' : '2日目'}`;
