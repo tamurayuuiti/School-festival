@@ -422,13 +422,20 @@
             document.getElementById('total-amount').innerText = `総金額: ${totalAmount} 円`;
         }
 
+        let lastSelectedDay = '1'; // 最初の状態として1日目を保持
+
         function confirmDayChange(selectedDay) {
             // ポップアップでユーザーに確認
             const isConfirmed = confirm("日付を変更してもよろしいですか？");
-            
+
             if (!isConfirmed) {
-                return; // ユーザーがキャンセルした場合、処理を中断
+                // ユーザーがキャンセルした場合、元の日付に戻す
+                document.querySelector(`input[name="day"][value="${lastSelectedDay}"]`).checked = true;
+                return;
             }
+
+            // ユーザーが変更を許可した場合、選択された日付を保持
+            lastSelectedDay = selectedDay;
 
             countersRef.child(currentDay).off('value');
             currentDay = selectedDay === '1' ? 'day1' : 'day2';
