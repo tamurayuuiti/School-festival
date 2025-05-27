@@ -4,249 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>幸せのカステラ屋さん</title>
-    <style>
-        :root {
-            --primary-color: #007BFF;
-            --dark-background: #222;
-            --light-background: #f4f4f9;
-            --dark-text: #333;
-            --light-text: #ddd;
-            --button-bg: #007BFF;
-            --button-hover-bg: #0056b3;
-            --box-shadow: rgba(0, 0, 0, 0.1);
-            --font-size-base: 1em;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-background);
-            color: var(--dark-text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
-            box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s;
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: calc(env(safe-area-inset-bottom) + 20px); /* ノッチの余白に追加で余白を加える */
-        }
-
-        .dark-mode {
-            background-color: var(--dark-background);
-            color: var(--light-text);
-        }
-
-        .counters-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            width: 100%;
-            max-width: 1200px;
-            align-items: center;
-            box-sizing: border-box;
-            margin: 0 auto;
-        }
-
-        #counters {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-gap: 1rem;
-            padding: 1rem;
-            width: 100%;
-            max-width: 100%;
-            justify-items: center;
-            box-sizing: border-box;
-            margin: 0 auto;
-            justify-content: center;
-        }
-
-        .counter-container {
-            background: #fff;
-            color: #333;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px var(--box-shadow);
-            padding: 1.5rem;
-            text-align: center;
-            transition: transform 0.2s, background-color 0.3s, color 0.3s;
-            width: 100%;
-            max-width: 300px;
-            height: 100%;
-            box-sizing: border-box;
-        }
-
-        .dark-mode .counter-container {
-            background: #333;
-            color: #ddd;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-        }
-
-        .counter-container:hover {
-            transform: translateY(-5px);
-        }
-
-        .counter-container h2 {
-            font-size: 1.5rem;
-            line-height: 1.5;
-            font-weight: 600;
-            margin: 0;
-            padding: 5px 0;
-        }
-
-        .count {
-            font-size: 1.7rem;
-            margin: 10px 0;
-        }
-
-        .remaining {
-            font-size: 5vw;
-            color: inherit;
-            white-space: nowrap;
-        }
-
-        .amount {
-            font-size: 1.4rem;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        button {
-            width: 50%;
-            aspect-ratio: 1 / 1;
-            max-width: 100px;
-            max-height: 100px;
-            font-size: calc(1.2rem + 0.2vw);
-            border: none;
-            border-radius: 8px;
-            background-color: var(--button-bg);
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            touch-action: manipulation;
-        }
-
-        .dark-mode button {
-            background-color: var(--button-hover-bg);
-        }
-
-        button:hover {
-            background-color: var(--button-hover-bg);
-        }
-
-        button:active {
-            transform: scale(0.95);
-        }
-
-        .icon-plus::before, .icon-minus::before {
-            font-size: calc(1.2rem + 0.2vw);
-            content: attr(data-icon);
-        }
-
-        .totals-container {
-            margin-top: 1.5rem;
-            margin-bottom: 20px; /* 余白を追加 */
-            background-color: #ffffff;
-            color: #333;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px var(--box-shadow);
-            text-align: center;
-            width: 100%;
-            max-width: 90%;
-            transition: background-color 0.3s, color 0.3s;
-            box-sizing: border-box;
-            margin: 0 auto;
-        }
-
-        .dark-mode .totals-container {
-            background: #333;
-            color: #ddd;
-        }
-
-        .total-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .total-value {
-            font-size: 1.3rem;
-        }
-
-        .day-select {
-            margin: 1.4rem 0 1.3rem;
-            text-align: center;
-            width: 100%;
-        }
-
-        .day-select label {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .current-day {
-            font-size: 1.7rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        @media (min-width: 769px) {
-            #counters {
-                grid-template-columns: repeat(5, 1fr);
-                grid-gap: 1rem;
-                justify-items: center;
-                justify-content: center;
-            }
-
-            .counter-container {
-                padding: 1.5rem;
-            }
-
-            .counter-container h2, .count, .amount {
-                font-size: 1.6rem;
-            }
-
-            .remaining {
-                font-size: 1.4rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .portrait #counters {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(3, 1fr);
-            }
-
-            .landscape #counters {
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(2, 1fr);
-            }
-
-            .landscape.mobile #counters {
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: auto auto;
-                grid-template-areas:
-                    "item1 item2 item3"
-                    "item4 item5 .";
-            }
-
-            .counter-container {
-                width: 100%;
-                padding: 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
     <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <!-- Firebase Realtime Database -->
@@ -264,240 +22,63 @@
     <div class="current-day" id="current-day">現在の設定: 1日目</div>
     <div class="counters-section">
         <div id="counters" class="landscape">
-            <div class="counter-container" id="plain-counter" style="border-top: 5px solid #007BFF;">
-                <h2>プレーン</h2>
+            <div class="counter-container" id="plain-counter" style="border-top: 5px solid #007BFF;" role="region" aria-labelledby="plain-label">
+                <h2 id="plain-label">プレーン</h2>
                 <div class="count" id="plain-count">0/30</div>
                 <div class="remaining" id="plain-remaining">残り: 30 個</div>
                 <div class="amount" id="plain-amount">0 円</div>
                 <div class="button-group">
-                    <button onclick="changeCount('plain', 1)" class="icon-plus" data-icon="+"></button>
-                    <button onclick="changeCount('plain', -1)" class="icon-minus" data-icon="-"></button>
+                    <button type="button" onclick="changeCount('plain', 1)" class="icon-plus" data-icon="+" aria-label="プレーンを1増やす"></button>
+                    <button type="button" onclick="changeCount('plain', -1)" class="icon-minus" data-icon="-" aria-label="プレーンを1減らす"></button>
                 </div>
             </div>
-            <div class="counter-container" id="choco-counter" style="border-top: 5px solid #8B4513;">
-                <h2>チョコ</h2>
+            <div class="counter-container" id="choco-counter" style="border-top: 5px solid #8B4513;" role="region" aria-labelledby="choco-label">
+                <h2 id="choco-label">チョコ</h2>
                 <div class="count" id="choco-count">0/100</div>
                 <div class="remaining" id="choco-remaining">残り: 100 個</div>
                 <div class="amount" id="choco-amount">0 円</div>
                 <div class="button-group">
-                    <button onclick="changeCount('choco', 1)" class="icon-plus" data-icon="+"></button>
-                    <button onclick="changeCount('choco', -1)" class="icon-minus" data-icon="-"></button>
+                    <button type="button" onclick="changeCount('choco', 1)" class="icon-plus" data-icon="+" aria-label="チョコを1増やす"></button>
+                    <button type="button" onclick="changeCount('choco', -1)" class="icon-minus" data-icon="-" aria-label="チョコを1減らす"></button>
                 </div>
             </div>
-            <div class="counter-container" id="strawberry-counter" style="border-top: 5px solid #FF6347;">
-                <h2>いちご</h2>
+            <div class="counter-container" id="strawberry-counter" style="border-top: 5px solid #FF6347;" role="region" aria-labelledby="strawberry-label">
+                <h2 id="strawberry-label">いちご</h2>
                 <div class="count" id="strawberry-count">0/100</div>
                 <div class="remaining" id="strawberry-remaining">残り: 100 個</div>
                 <div class="amount" id="strawberry-amount">0 円</div>
                 <div class="button-group">
-                    <button onclick="changeCount('strawberry', 1)" class="icon-plus" data-icon="+"></button>
-                    <button onclick="changeCount('strawberry', -1)" class="icon-minus" data-icon="-"></button>
+                    <button type="button" onclick="changeCount('strawberry', 1)" class="icon-plus" data-icon="+" aria-label="いちごを1増やす"></button>
+                    <button type="button" onclick="changeCount('strawberry', -1)" class="icon-minus" data-icon="-" aria-label="いちごを1減らす"></button>
                 </div>
             </div>
-            <div class="counter-container" id="matcha-counter" style="border-top: 5px solid #3CB371;">
-                <h2>抹茶</h2>
+            <div class="counter-container" id="matcha-counter" style="border-top: 5px solid #3CB371;" role="region" aria-labelledby="matcha-label">
+                <h2 id="matcha-label">抹茶</h2>
                 <div class="count" id="matcha-count">0/50</div>
                 <div class="remaining" id="matcha-remaining">残り: 50 個</div>
                 <div class="amount" id="matcha-amount">0 円</div>
                 <div class="button-group">
-                    <button onclick="changeCount('matcha', 1)" class="icon-plus" data-icon="+"></button>
-                    <button onclick="changeCount('matcha', -1)" class="icon-minus" data-icon="-"></button>
+                    <button type="button" onclick="changeCount('matcha', 1)" class="icon-plus" data-icon="+" aria-label="抹茶を1増やす"></button>
+                    <button type="button" onclick="changeCount('matcha', -1)" class="icon-minus" data-icon="-" aria-label="抹茶を1減らす"></button>
                 </div>
             </div>
-            <div class="counter-container" id="jdk-counter" style="border-top: 5px solid #FFD700;">
-                <h2>JDK</h2>
+            <div class="counter-container" id="jdk-counter" style="border-top: 5px solid #FFD700;" role="region" aria-labelledby="jdk-label">
+                <h2 id="jdk-label">JDK</h2>
                 <div class="count" id="jdk-count">0/20</div>
                 <div class="remaining" id="jdk-remaining">残り: 20 個</div>
                 <div class="amount" id="jdk-amount">0 円</div>
                 <div class="button-group">
-                    <button onclick="changeCount('jdk', 1)" class="icon-plus" data-icon="+"></button>
-                    <button onclick="changeCount('jdk', -1)" class="icon-minus" data-icon="-"></button>
+                    <button type="button" onclick="changeCount('jdk', 1)" class="icon-plus" data-icon="+" aria-label="JDKを1増やす"></button>
+                    <button type="button" onclick="changeCount('jdk', -1)" class="icon-minus" data-icon="-" aria-label="JDKを1減らす"></button>
                 </div>
             </div>
         </div>
-        <div class="totals-container">
+        <div class="totals-container" role="status" aria-live="polite">
             <div class="total-title">合計</div>
             <div class="total-value" id="total-count">総数量: 0 個</div>
             <div class="total-value" id="total-amount">総金額: 0 円</div>
         </div>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const firebaseConfig = {
-            apiKey: "AIzaSyDfmjWjPl786cVBXzqlsiZsS4MUFbwrNNM",
-            authDomain: "school-festival-e4c8d.firebaseapp.com",
-            databaseURL: "https://school-festival-e4c8d-default-rtdb.firebaseio.com",
-            projectId: "school-festival-e4c8d",
-            storageBucket: "school-festival-e4c8d.appspot.com",
-            messagingSenderId: "658868728855",
-            appId: "1:658868728855:web:8d7497c6838f5a42d21852"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const countersRef = database.ref('counters');
-
-        countersRef.once('value').then(snapshot => {
-            if (!snapshot.exists()) {
-                countersRef.set({
-                    day1: { plain: 0, choco: 0, strawberry: 0, matcha: 0, jdk: 0 },
-                    day2: { plain: 0, choco: 0, strawberry: 0, matcha: 0, jdk: 0 }
-                });
-            }
-        });
-
-        let currentDay = 'day1';
-        const limits = {
-            day1: { plain: 30, choco: 100, strawberry: 100, matcha: 50, jdk: 20 },
-            day2: { plain: 30, choco: 150, strawberry: 150, matcha: 40, jdk: 30 }
-        };
-
-        const values = {
-            plain: 100,
-            choco: 100,
-            strawberry: 100,
-            matcha: 100,
-            jdk: 200
-        };
-
-        function updateUI(counters) {
-            if (!counters) return;
-            for (let type in counters) {
-                const count = parseInt(counters[type], 10) || 0;
-                const remaining = limits[currentDay][type] - count;
-                document.getElementById(`${type}-count`).innerText = `${count}/${limits[currentDay][type]}`;
-                document.getElementById(`${type}-remaining`).innerText = remaining === 0 ? '売り切れ' : `残り: ${remaining} 個`;
-                document.getElementById(`${type}-amount`).innerText = `${count * values[type]} 円`;
-            }
-            updateTotals(counters);
-        }
-
-        function logCountChange(type, delta, newCount) {
-            const logRef = database.ref('logs').push();
-
-            const timestamp = new Date();
-            const formattedTimestamp = `${timestamp.getFullYear()}-${String(timestamp.getMonth() + 1).padStart(2, '0')}-${String(timestamp.getDate()).padStart(2, '0')} ${String(timestamp.getHours()).padStart(2, '0')}:${String(timestamp.getMinutes()).padStart(2, '0')}:${String(timestamp.getSeconds()).padStart(2, '0')}`;
-
-            const logEntry = {
-                type: type,
-                change: delta > 0 ? 'increment' : 'decrement',
-                amountChanged: delta,
-                newCount: newCount,
-                day: currentDay, // 変更された日付（1日目または2日目）
-                timestamp: formattedTimestamp
-            };
-
-            logRef.set(logEntry)
-                .then(() => console.log('Log entry saved successfully:', logEntry))
-                .catch(error => console.error('Failed to save log entry:', error));
-        }
-
-        function changeCount(type, delta) {
-            const currentCountRef = countersRef.child(`${currentDay}/${type}`);
-            currentCountRef.transaction(count => {
-                const newCount = (parseInt(count, 10) || 0) + delta;
-                if (newCount >= 0 && newCount <= limits[currentDay][type]) {
-                    logCountChange(type, delta, newCount);
-                    return newCount;
-                }
-                return count;
-            });
-        }
-
-        function updateRealTimeListener() {
-            countersRef.child(currentDay).on('value', snapshot => {
-                if (snapshot.exists()) {
-                    updateUI(snapshot.val());
-                }
-            });
-        }
-
-        updateRealTimeListener();
-
-        function updateTotals(counters) {
-            const totalCount = Object.values(counters).reduce((sum, count) => sum + (parseInt(count, 10) || 0), 0);
-            const totalAmount = Object.entries(counters).reduce((sum, [key, count]) => sum + ((parseInt(count, 10) || 0) * values[key]), 0);
-
-            document.getElementById('total-count').innerText = `総数量: ${totalCount} 個`;
-            document.getElementById('total-amount').innerText = `総金額: ${totalAmount} 円`;
-        }
-
-        let lastSelectedDay = '1'; // 最初の状態として1日目を保持
-
-        function confirmDayChange(selectedDay) {
-            // ポップアップでユーザーに確認
-            const isConfirmed = confirm("日付を変更してもよろしいですか？");
-
-            if (!isConfirmed) {
-                // ユーザーがキャンセルした場合、元の日付に戻す
-                document.querySelector(`input[name="day"][value="${lastSelectedDay}"]`).checked = true;
-                return;
-            }
-
-            // ユーザーが変更を許可した場合、選択された日付を保持
-            lastSelectedDay = selectedDay;
-
-            countersRef.child(currentDay).off('value');
-            currentDay = selectedDay === '1' ? 'day1' : 'day2';
-            document.getElementById('current-day').innerText = `現在の設定: ${currentDay === 'day1' ? '1日目' : '2日目'}`;
-            countersRef.child(currentDay).once('value').then(snapshot => {
-                updateUI(snapshot.val() || {});
-            });
-            updateRealTimeListener();
-        }
-
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        function applyTheme(e) {
-            if (e.matches) {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
-        }
-        mediaQuery.addEventListener('change', applyTheme);
-        applyTheme(mediaQuery);
-
-        function getDeviceType() {
-            const ua = navigator.userAgent;
-            if (/Mobi|Android/i.test(ua)) {
-                return 'mobile';
-            }
-            return 'desktop';
-        }
-
-        const deviceType = getDeviceType();
-        const countersElement = document.getElementById('counters');
-
-        if (deviceType === 'mobile') {
-            countersElement.classList.add('mobile');
-        } else {
-            countersElement.classList.add('desktop');
-        }
-
-        function updateOrientation() {
-            const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-            if (isPortrait) {
-                countersElement.classList.remove('landscape');
-                countersElement.classList.add('portrait');
-            } else {
-                countersElement.classList.remove('portrait');
-                countersElement.classList.add('landscape');
-                if (deviceType === 'mobile') {
-                    countersElement.classList.add('landscape');
-                }
-            }
-        }
-
-        window.addEventListener('orientationchange', updateOrientation);
-        window.addEventListener('resize', updateOrientation);
-
-        updateOrientation();
-
-        window.changeCount = changeCount;
-        window.confirmDayChange = confirmDayChange;
-
-        console.log('Firebase initialized with project:', firebaseConfig.projectId);
-    });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
